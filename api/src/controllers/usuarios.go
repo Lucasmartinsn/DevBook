@@ -9,7 +9,7 @@ func BuscaUsers(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Buscando todos os usuarios"))
 }
 func BuscaUser(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Buscando todos um usuarios"))
+	w.Write([]byte("Buscando um usuarios"))
 }
 func AtualizarUser(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Atualizando o usuario"))

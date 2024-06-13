@@ -3,7 +3,7 @@ package rotas
 import (
 	"net/http"
 
-	"github.com/Lucasmartinsn/DevBook/api/src/router/controllers"
+	"github.com/Lucasmartinsn/DevBook/api/src/controllers"
 )
 
 var rotasUser = []Rota{
@@ -26,7 +26,7 @@ var rotasUser = []Rota{
 		ResquerAutntication: false,
 	},
 	{
-		Uri:                 "/usuario",
+		Uri:                 "/usuario/{id}",
 		Metodo:              http.MethodPut,
 		Funcao:              controllers.AtualizarUser,
 		ResquerAutntication: false,

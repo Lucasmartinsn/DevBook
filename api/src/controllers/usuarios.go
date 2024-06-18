@@ -23,6 +23,10 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 400, err)
 		return
 	}
+	if err := usuario.Preparar(); err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
 	conn, err := banco.Connction()
 	if err != nil {
 		resposta.Erro(w, 500, err)

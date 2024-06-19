@@ -2,6 +2,7 @@ package repositorios
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
 )
@@ -31,4 +32,25 @@ func (reposositorio usuario) Criar(usuario modelos.Usuario) (uint64, error) {
 	}
 
 	return uint64(lastInsert), nil
+}
+
+func (reposositorio usuario) Buscar(nomeOUnick string) ([]modelos.Usuario, error) {
+	nomeOUnicks := fmt.Sprintf("%%%s%%", nomeOUnick)
+	linha, err := reposositorio.db.Query(
+		"select id, nome,nick, email, criacaoEm from usuario where nome LIKE ? or nick LIKE ?", nomeOUnicks, nomeOUnicks,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer linha.Close()
+
+	var usuarios []modelos.Usuario
+	for linha.Next() {
+		var usuario modelos.Usuario
+		if err = linha.Scan(&usuario.Id, &usuario.Nome, &usuario.Nick, &usuario.Email, &usuario.CriacaoEM); err != nil {
+			return nil, err
+		}
+		usuarios = append(usuarios, usuario)
+	}
+	return usuarios, nil
 }

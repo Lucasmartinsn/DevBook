@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/Lucasmartinsn/DevBook/api/src/banco"
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
@@ -32,6 +33,8 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 500, err)
 		return
 	}
+	defer conn.Close()
+
 	reposositorio := repositorios.NewReporOfUser(conn)
 	userId, err := reposositorio.Criar(usuario)
 	if err != nil {
@@ -42,7 +45,21 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func BuscaUsers(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Buscando todos os usuarios"))
+	nameORnick := strings.ToLower(r.URL.Query().Get("usuario"))
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+
+	repositorio := repositorios.NewReporOfUser(conn)
+	usuarios, err := repositorio.Buscar(nameORnick)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, usuarios)
 }
 func BuscaUser(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Buscando um usuarios"))

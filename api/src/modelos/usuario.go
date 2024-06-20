@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Lucasmartinsn/DevBook/api/src/seguranca"
 	"github.com/badoux/checkmail"
 )
 
@@ -21,7 +22,9 @@ func (usuario *Usuario) Preparar(etapa string) error {
 	if err := usuario.validacao(etapa); err != nil {
 		return err
 	} else {
-		usuario.formatar()
+		if err := usuario.formatar(etapa); err != nil {
+			return err
+		}
 		return nil
 	}
 }
@@ -43,8 +46,16 @@ func (ususario *Usuario) validacao(etapa string) (erro error) {
 	return nil
 }
 
-func (ususario *Usuario) formatar() {
+func (ususario *Usuario) formatar(etapa string) error {
+	if etapa == "cadastrar" {
+		senha, err := seguranca.Hash(ususario.Senha)
+		if err != nil {
+			return err
+		}
+		ususario.Senha = string(senha)
+	}
 	ususario.Nome = strings.TrimSpace(ususario.Nome)
 	ususario.Nick = strings.TrimSpace(ususario.Nick)
 	ususario.Email = strings.TrimSpace(ususario.Email)
+	return nil
 }

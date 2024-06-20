@@ -15,8 +15,8 @@ type Usuario struct {
 	CriacaoEM time.Time `json:"criacaoEm,omitempty"`
 }
 
-func (usuario *Usuario) Preparar() error {
-	if err := usuario.validacao(); err != nil {
+func (usuario *Usuario) Preparar(etapa string) error {
+	if err := usuario.validacao(etapa); err != nil {
 		return err
 	} else {
 		usuario.formatar()
@@ -24,10 +24,13 @@ func (usuario *Usuario) Preparar() error {
 	}
 }
 
-func (ususario *Usuario) validacao() (erro error) {
-	for _, key := range []string{ususario.Nome, ususario.Nick, ususario.Email, ususario.Senha} {
+func (ususario *Usuario) validacao(etapa string) (erro error) {
+	for _, key := range []string{ususario.Nome, ususario.Nick, ususario.Email} {
 		if key == "" {
 			erro = errors.New("Variavel requeridas estao vindo vazias, verifique o sua request JSON")
+			return
+		} else if ususario.Senha == "" && etapa == "cadastrar" {
+			erro = errors.New("Senha nao deve ser vazia")
 			return
 		}
 	}

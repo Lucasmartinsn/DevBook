@@ -5,12 +5,17 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/Lucasmartinsn/DevBook/api/src/autenticacao"
 	"github.com/Lucasmartinsn/DevBook/api/src/banco"
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
 	"github.com/Lucasmartinsn/DevBook/api/src/repositorios"
 	"github.com/Lucasmartinsn/DevBook/api/src/resposta"
 	"github.com/Lucasmartinsn/DevBook/api/src/seguranca"
 )
+
+type token struct {
+	Token string `json:"token"`
+}
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	bodyResquest, err := io.ReadAll(r.Body)
@@ -45,6 +50,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 403, err)
 		return
 	}
+	Token, err := autenticacao.CriarToken(data.Id)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
 
-	resposta.Json(w, 201, "token")
+	resposta.Json(w, 201, token{Token})
 }

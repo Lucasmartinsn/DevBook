@@ -29,14 +29,30 @@ func (usuario *Usuario) Preparar(etapa string) error {
 	}
 }
 
-func (ususario *Usuario) validacao(etapa string) (erro error) {
-	for _, key := range []string{ususario.Nome, ususario.Nick, ususario.Email} {
+func resposta(keys []string) error {
+	for _, key := range keys {
 		if key == "" {
-			erro = errors.New("Variavel requeridas estao vindo vazias, verifique o sua request JSON")
-			return
-		} else if ususario.Senha == "" && etapa == "cadastrar" {
-			erro = errors.New("Senha nao deve ser vazia")
-			return
+			return errors.New("Variavel requeridas estao vindo vazias, verifique o sua request JSON")
+		}
+	}
+	return nil
+}
+
+func (ususario *Usuario) validacao(etapa string) (erro error) {
+	switch etapa {
+	case "cadastrar":
+		if erro = resposta([]string{ususario.Nome, ususario.Nick, ususario.Email, ususario.Senha}); erro != nil {
+			return erro
+		}
+		
+	case "login":
+		if erro = resposta([]string{ususario.Email, ususario.Senha}); erro != nil {
+			return erro
+		}
+
+	case "atualizar":
+		if erro = resposta([]string{ususario.Nome, ususario.Nick, ususario.Email}); erro != nil {
+			return erro
 		}
 	}
 	if erro = checkmail.ValidateFormat(ususario.Email); erro != nil {

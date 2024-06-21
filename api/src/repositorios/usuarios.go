@@ -79,7 +79,6 @@ func (repositorio usuario) Atualizar(id uint64, usuario modelos.Usuario) error {
 	}
 	return nil
 }
-
 func (repositorio usuario) Deletar(id uint64) error {
 	statement, err := repositorio.db.Prepare("delete from usuario where id = ?")
 	if err != nil {
@@ -91,3 +90,19 @@ func (repositorio usuario) Deletar(id uint64) error {
 	}
 	return nil
 }
+func (repositorio usuario) BuscarPorEmail(email string) (modelos.Usuario, error) {
+	linha, err := repositorio.db.Query("select id, senha from usuario where email = ?", email)
+	if err != nil {
+		return modelos.Usuario{}, err
+	}
+	defer linha.Close()
+
+	var usuario modelos.Usuario
+	if linha.Next() {
+		if err = linha.Scan(&usuario.Id, &usuario.Senha); err != nil {
+			return modelos.Usuario{}, err
+		}
+	}
+	return usuario, nil
+}
+

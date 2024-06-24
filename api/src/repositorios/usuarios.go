@@ -105,4 +105,61 @@ func (repositorio usuario) BuscarPorEmail(email string) (modelos.Usuario, error)
 	}
 	return usuario, nil
 }
+func (repositorio usuario) Seguir(seguidorId, usuarioId uint64) error {
+	statement, err := repositorio.db.Prepare("insert ignore into seguidores (usuarioId, seguidoresId) values (?, ?)")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
 
+	if _, err = statement.Exec(usuarioId, seguidorId); err != nil {
+		return err
+	}
+	return nil
+}
+func (repositorio usuario) PararDeSeguir(seguidorId, usuarioId uint64) error {
+	statement, err := repositorio.db.Prepare("delete from seguidores where usuarioId = ? and  seguidoresId = ?")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(usuarioId, seguidorId); err != nil {
+		return err
+	}
+	return nil
+}
+func (repositorio usuario) BuscarSeguidores(usuarioId uint64) ([]modelos.Usuario, error) {
+	linhas, err := repositorio.db.Query(`
+	select u.id, u.nome, u.nick, u.email, u.criacaoEm from usuarios u inner join
+	seguidores s on u.id = s.seguidorId where s.usuarioId = ?`, usuarioId)
+	if err != nil {
+		return nil, err
+	}
+	var seguidores []modelos.Usuario
+	if linhas.Next() {
+		var seguidor modelos.Usuario
+		if err = linhas.Scan(seguidor.Id, seguidor.Nome, seguidor.Nick, seguidor.Email, seguidor.CriacaoEM); err != nil {
+			return nil, err
+		}
+		seguidores = append(seguidores, seguidor)
+	}
+	return seguidores, nil
+}
+func (repositorio usuario) BuscarSeguindo(usuarioId uint64) ([]modelos.Usuario, error) {
+	linhas, err := repositorio.db.Query(`
+	select u.id, u.nome, u.nick, u.email, u.criacaoEm from usuarios u inner join
+	seguidores s on u.id = s.usuarioId where s.seguidoresId = ?`, usuarioId)
+	if err != nil {
+		return nil, err
+	}
+	var usuarios []modelos.Usuario
+	if linhas.Next() {
+		var usuario modelos.Usuario
+		if err = linhas.Scan(usuario.Id, usuario.Nome, usuario.Nick, usuario.Email, usuario.CriacaoEM); err != nil {
+			return nil, err
+		}
+		usuarios = append(usuarios, usuario)
+	}
+	return usuarios, nil
+}

@@ -10,3 +10,11 @@ create table usuario (
     senha varchar(100) not null,
     criacaoEm timestamp default current_timestamp()
 );
+
+create table seguidores (
+    usuarioId int not null,
+    seguidoresId int not null,
+    foreign key (usuarioId) references usuario(id) on delete cascade,
+    foreign key (seguidoresId) references usuario(id) on delete cascade,
+    primary key(usuarioId, seguidoresId)
+)

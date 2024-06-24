@@ -47,7 +47,6 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 	}
 	resposta.Json(w, 201, fmt.Sprintf("Usuario cadastradro, ID: %d", userId))
 }
-
 func BuscaUsers(w http.ResponseWriter, r *http.Request) {
 	nameORnick := strings.ToLower(r.URL.Query().Get("usuario"))
 	conn, err := banco.Connction()
@@ -128,7 +127,6 @@ func AtualizarUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resposta.Json(w, 200, nil)
-
 }
 func DeletaUser(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
@@ -156,4 +154,105 @@ func DeletaUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resposta.Json(w, 200, nil)
+}
+func SeguirUser(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	seguidorId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	userId, erro := autenticacao.ExtrairID(r)
+	if erro != nil {
+		resposta.Erro(w, 400, err)
+		return
+	} else if userId == seguidorId {
+		resposta.Erro(w, 403, errors.New("voce nao pode serguir voce mesmo"))
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+	repositorio := repositorios.NewReporOfUser(conn)
+	if err = repositorio.Seguir(seguidorId, userId); err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, nil)
+}
+func PararDeSeguir(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	seguidorId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	userId, erro := autenticacao.ExtrairID(r)
+	if erro != nil {
+		resposta.Erro(w, 400, err)
+		return
+	} else if userId == seguidorId {
+		resposta.Erro(w, 403, errors.New("nao é possivel parar de serguir voce mesmo"))
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+
+	repositorio := repositorios.NewReporOfUser(conn)
+	if err = repositorio.PararDeSeguir(seguidorId, userId); err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, nil)
+}
+func BuscarSeguidores(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	usuarioId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+
+	repositorio := repositorios.NewReporOfUser(conn)
+	seguidores, err := repositorio.BuscarSeguidores(usuarioId)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, seguidores)
+}
+func BuscarSeguindo(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	usuarioId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+
+	repositorio := repositorios.NewReporOfUser(conn)
+	seguidores, err := repositorio.BuscarSeguindo(usuarioId)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, seguidores)
 }

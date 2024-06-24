@@ -37,4 +37,28 @@ var rotasUser = []Rota{
 		Funcao:              controllers.DeletaUser,
 		ResquerAutntication: true,
 	},
+	{
+		Uri:                 "/usuario/{id}/seguir",
+		Metodo:              http.MethodPost,
+		Funcao:              controllers.SeguirUser,
+		ResquerAutntication: true,
+	},
+	{
+		Uri:                 "/usuario/{id}/parar-de-seguir",
+		Metodo:              http.MethodPost,
+		Funcao:              controllers.PararDeSeguir,
+		ResquerAutntication: true,
+	},
+	{
+		Uri:                 "/usuario/{id}/seguidores",
+		Metodo:              http.MethodGet,
+		Funcao:              controllers.BuscarSeguidores,
+		ResquerAutntication: true,
+	},
+	{
+		Uri:                 "/usuario/{id}/seguindo",
+		Metodo:              http.MethodGet,
+		Funcao:              controllers.BuscarSeguindo,
+		ResquerAutntication: true,
+	},
 }

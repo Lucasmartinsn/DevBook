@@ -18,6 +18,11 @@ type Usuario struct {
 	CriacaoEM time.Time `json:"criacaoEm,omitempty"`
 }
 
+type Senha struct {
+	Atual string `json:"atual"`
+	Nova  string `json:"nova"`
+}
+
 func (usuario *Usuario) Preparar(etapa string) error {
 	if err := usuario.validacao(etapa); err != nil {
 		return err
@@ -44,7 +49,7 @@ func (ususario *Usuario) validacao(etapa string) (erro error) {
 		if erro = resposta([]string{ususario.Nome, ususario.Nick, ususario.Email, ususario.Senha}); erro != nil {
 			return erro
 		}
-		
+
 	case "login":
 		if erro = resposta([]string{ususario.Email, ususario.Senha}); erro != nil {
 			return erro

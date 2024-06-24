@@ -14,6 +14,7 @@ import (
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
 	"github.com/Lucasmartinsn/DevBook/api/src/repositorios"
 	"github.com/Lucasmartinsn/DevBook/api/src/resposta"
+	"github.com/Lucasmartinsn/DevBook/api/src/seguranca"
 	"github.com/gorilla/mux"
 )
 
@@ -255,4 +256,56 @@ func BuscarSeguindo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resposta.Json(w, 200, seguidores)
+}
+func AtualizarUserPass(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	usuarioId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	if userId, erro := autenticacao.ExtrairID(r); erro != nil {
+		resposta.Erro(w, 400, err)
+		return
+	} else if userId != usuarioId {
+		resposta.Erro(w, 403, errors.New("voce nao pode modificar um usuario que nao seja o seu"))
+		return
+	}
+	bodyResquest, err := io.ReadAll(r.Body)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	var senha modelos.Senha
+	if err = json.Unmarshal(bodyResquest, &senha); err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+	repositorio := repositorios.NewReporOfUser(conn)
+	senhaAtual, err := repositorio.BuscarPorSenha(usuarioId)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	if err := seguranca.VerificaSenha(senhaAtual, senha.Atual); err != nil {
+		resposta.Erro(w, 401, errors.New("senha atual nao coresponde a senha salva no banco"))
+		return
+	}
+	newSenha, err := seguranca.Hash(senha.Nova)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	if err := repositorio.AtualizarSenha(usuarioId, string(newSenha)); err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+
+	resposta.Json(w, 200, nil)
 }

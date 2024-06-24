@@ -11,7 +11,7 @@ var rotasUser = []Rota{
 		Uri:                 "/usuario",
 		Metodo:              http.MethodPost,
 		Funcao:              controllers.CriarUser,
-		ResquerAutntication: true,
+		ResquerAutntication: false,
 	},
 	{
 		Uri:                 "/usuario",

@@ -2,8 +2,10 @@ package autenticacao
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -34,6 +36,21 @@ func ValidarToken(r *http.Request) error {
 	return errors.New("token invalido")
 }
 
+func ExtrairID(r *http.Request) (uint64, error) {
+	tokenString := extrairToken(r)
+	token, err := jwt.Parse(tokenString, returnKeyToken)
+	if err != nil {
+		return 0, err
+	}
+	if permicao, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		userId, err := strconv.ParseUint(fmt.Sprintf("%.0f", permicao["usuarioId"]), 10, 64)
+		if err != nil {
+			return 0, err
+		}
+		return userId, nil
+	}
+	return 0, errors.New("token invalido")
+}
 func returnKeyToken(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 		return nil, errors.New("metodo de assinatura inesperado")

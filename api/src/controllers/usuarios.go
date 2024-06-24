@@ -2,12 +2,14 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"strconv"
 	"strings"
 
+	"github.com/Lucasmartinsn/DevBook/api/src/autenticacao"
 	"github.com/Lucasmartinsn/DevBook/api/src/banco"
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
 	"github.com/Lucasmartinsn/DevBook/api/src/repositorios"
@@ -92,6 +94,14 @@ func AtualizarUser(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 400, err)
 		return
 	}
+	if userId, erro := autenticacao.ExtrairID(r); erro != nil {
+		resposta.Erro(w, 401, err)
+		return
+	} else if userId != usuarioId {
+		resposta.Erro(w, 403, errors.New("sem permição para modificar usuarios que nao sejam o seu"))
+		return
+	}
+
 	bodyResquest, err := io.ReadAll(r.Body)
 	if err != nil {
 		resposta.Erro(w, 400, err)
@@ -125,6 +135,13 @@ func DeletaUser(w http.ResponseWriter, r *http.Request) {
 	usuarioId, err := strconv.ParseUint(param["id"], 10, 64)
 	if err != nil {
 		resposta.Erro(w, 400, err)
+		return
+	}
+	if userId, erro := autenticacao.ExtrairID(r); erro != nil {
+		resposta.Erro(w, 401, err)
+		return
+	} else if userId != usuarioId {
+		resposta.Erro(w, 403, errors.New("sem permição para remover usuarios que nao seja o seu"))
 		return
 	}
 	conn, err := banco.Connction()

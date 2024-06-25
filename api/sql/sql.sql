@@ -24,7 +24,6 @@ create table publicacao (
     titulo varchar(50) not null,
     conteudo varchar(300) not null,
     autorId int not null,
-    autorNick varchar(50) not null,
     curtidas int default 0,
     criadaEm timestamp default current_timestamp(),
     foreign key (autorId) references usuario(id) on delete cascade

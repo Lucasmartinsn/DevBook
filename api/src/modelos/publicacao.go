@@ -16,8 +16,8 @@ type Publicacao struct {
 	CriadaEm  time.Time `json:"criadaEm,omitempty"`
 }
 
-func (publicacao *Publicacao) PrepararPublicacao(etapa string) error {
-	if err := publicacao.validacaoPublicacao(etapa); err != nil {
+func (publicacao *Publicacao) PrepararPublicacao() error {
+	if err := publicacao.validacaoPublicacao(); err != nil {
 		return err
 	} else {
 		if err := publicacao.formatarPublicacao(); err != nil {
@@ -26,7 +26,9 @@ func (publicacao *Publicacao) PrepararPublicacao(etapa string) error {
 		return nil
 	}
 }
-func respostaPublicacao(keys []string) error {
+
+func (publicacao *Publicacao) validacaoPublicacao() (erro error) {
+	keys := []string{publicacao.Titulo, publicacao.Conteudo}
 	for _, key := range keys {
 		if key == "" {
 			return errors.New("Variavel requeridas estao vindo vazias, verifique o sua request JSON")
@@ -35,19 +37,6 @@ func respostaPublicacao(keys []string) error {
 	return nil
 }
 
-func (publicacao *Publicacao) validacaoPublicacao(etapa string) (erro error) {
-	switch etapa {
-	case "cadastrar":
-		if erro = resposta([]string{publicacao.Titulo, publicacao.Conteudo}); erro != nil {
-			return erro
-		}
-	case "atualizar":
-		if erro = resposta([]string{publicacao.Titulo, publicacao.Conteudo}); erro != nil {
-			return erro
-		}
-	}
-	return nil
-}
 func (publicacao *Publicacao) formatarPublicacao() error {
 	publicacao.Titulo = strings.TrimSpace(publicacao.Titulo)
 	publicacao.Conteudo = strings.TrimSpace(publicacao.Conteudo)

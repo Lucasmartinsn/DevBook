@@ -5,10 +5,13 @@ import (
 	"log"
 	"net/http"
 	"webapp/src/router"
+	"webapp/src/utils"
 )
 
 func main() {
-	fmt.Println("rodando app web")
+	utils.CarregarTempletes()
 	r := router.Gerar()
+
+	fmt.Println("rodando app web")
 	log.Fatal(http.ListenAndServe(":3000", r))
 }

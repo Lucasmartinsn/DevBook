@@ -17,7 +17,7 @@ create table seguidores (
     foreign key (usuarioId) references usuario(id) on delete cascade,
     foreign key (seguidoresId) references usuario(id) on delete cascade,
     primary key(usuarioId, seguidoresId)
-)
+);
 
 create table publicacao (
     id int auto_increment primary key,

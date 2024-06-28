@@ -197,7 +197,7 @@ func BuscarPublicacaoUser(w http.ResponseWriter, r *http.Request) {
 	resposta.Json(w, 200, publicacoes)
 
 }
-func LikePublicacao(w http.ResponseWriter, r *http.Request)   {
+func LikePublicacao(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	publicacaoId, err := strconv.ParseUint(param["id"], 10, 64)
 	if err != nil {
@@ -215,5 +215,8 @@ func LikePublicacao(w http.ResponseWriter, r *http.Request)   {
 		return
 	}
 	defer conn.Close()
+
+	repositorio := repositorios.NewReporOfPublicacao(conn)
+
 }
 func UnlikePublicacao(w http.ResponseWriter, r *http.Request) {}

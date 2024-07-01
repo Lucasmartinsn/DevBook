@@ -72,6 +72,8 @@ span {
     border: 1px solid transparent;
     border-radius: 3px;
     margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
 }
 
 .btn-devbook {
@@ -101,4 +103,28 @@ span {
     position: relative;
     top: 19px;
     height: 20px;
+}
+
+.container-cadastro {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.container-cadastro > div {
+    width: 550px;
+    border-radius: 10px;
+    position: relative;
+    padding: 50px 0 90px 0;
+}
+.container-cadastro input {
+    width: 400px;
+}
+.btn-devbook-cadastro {
+    position: relative;
+    left: 60px;
 }

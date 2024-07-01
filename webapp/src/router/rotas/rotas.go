@@ -17,6 +17,7 @@ type Rota struct {
 // Essa função vai recuperar todas as rotas que tenhao sido criadas, e colocalas em um slice e retornaras
 func Configurar(router *mux.Router) *mux.Router {
 	rotas := RotaLogin
+	rotas = append(rotas, RotasUsuario...)
 	for _, rota := range rotas {
 		router.HandleFunc(rota.URI, rota.Funcao).Methods(rota.Method)
 	}

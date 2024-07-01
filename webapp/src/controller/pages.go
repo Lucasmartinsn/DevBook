@@ -10,3 +10,6 @@ func CarregarTelaLogin(w http.ResponseWriter, r *http.Request) {
 	// w.Write([]byte("tela login"))
 	utils.ExecultarTemplate(w, "login", nil)
 }
+func CarregarPageCadastro(w http.ResponseWriter, r *http.Request) {
+	utils.ExecultarTemplate(w, "cadastroUser", nil)
+}

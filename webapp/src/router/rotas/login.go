@@ -19,4 +19,10 @@ var RotaLogin = []Rota{
 		Funcao: controller.CarregarTelaLogin,
 		Auth:   false,
 	},
+	{
+		URI:    "/login",
+		Method: http.MethodPost,
+		Funcao: controller.FazerLogin,
+		Auth:   false,
+	},
 }

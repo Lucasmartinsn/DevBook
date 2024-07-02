@@ -25,10 +25,12 @@ func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
 	}
 	response, err := http.Post(fmt.Sprintf("%susuario", url), "application/json", bytes.NewBuffer(usuario))
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
 	}
 	defer response.Body.Close()
 

@@ -4,6 +4,7 @@ function criarUser(evento) {
     evento.preventDefault();
     if ($('#senha').val() != $('#ConfirmarSenha').val()) {
         alert("senhas nao coencidem");
+        return
     }
     $.ajax({
         url: '/usuario', // URL para onde enviar o POST
@@ -15,15 +16,12 @@ function criarUser(evento) {
             email: $('#email').val(),
             senha: $('#senha').val(),
             // adicione mais campos conforme necessário
-        },
-        success: function (data) {
-            // Função executada quando a requisição for bem-sucedida
-            console.log('Requisição bem-sucedida:', data);
-        },
-        error: function (xhr, status, error) {
-            // Função executada em caso de erro na requisição
-            console.error('Erro na requisição:', status, error);
         }
+    }).done(function(data) {
+        alert("usuario cadastrado com sucesso");
+    }).fail(function(data) {
+        console.log(data.responseJSON);
+        alert("falha ao cadastra usuario");
     });
 
 }

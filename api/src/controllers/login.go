@@ -14,7 +14,8 @@ import (
 )
 
 type token struct {
-	Token string `json:"token"`
+	Token  string `json:"token"`
+	IdUser uint64 `json:"idUser"`
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -56,5 +57,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resposta.Json(w, 201, token{Token})
+	resposta.Json(w, 201, token{Token: Token, IdUser: data.Id})
 }

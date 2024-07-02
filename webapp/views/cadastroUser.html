@@ -9,7 +9,7 @@
 <body>
     <div class="container-cadastro">
         <div class="devbook-form2div">
-            <form action="" method="post">
+            <form id="formulario-cadastro">
                 <span>Realize seu cadastro agora em DevBook</span>
                 <div class="container-cadastro-inputs">
                     <div>
@@ -26,10 +26,10 @@
                     </div>
                     <div>
                         <label for="senha">Senha:</label>
-                        <input type="password" name="senha" id="senha" placeholder="*********" required>
+                        <input type="password" minlength="8" name="senha" id="senha" placeholder="*********" required>
                         <div>
                             <label for="senha">Confirmar Senha:</label>
-                            <input type="text" name="senha" id="senha" placeholder="*********" required>
+                            <input type="text" minlength="8" name="ConfirmarSenha" id="ConfirmarSenha" placeholder="*********" required>
                         </div>
                     </div>
                     <div class="btn-conteiner btn-devbook-cadastro">
@@ -39,5 +39,8 @@
             </form>
         </div>
     </div>
+    <!-- Importe do da biblioteca Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/assets/js/cadastro.js"></script>
 </body>
 </html>

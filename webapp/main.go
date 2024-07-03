@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"webapp/src/router"
+	"webapp/src/service"
 	"webapp/src/utils"
 
 	"github.com/joho/godotenv"
@@ -18,6 +19,7 @@ func init() {
 }
 
 func main() {
+	service.ConfigCookie()
 	utils.CarregarTempletes()
 	r := router.Gerar()
 

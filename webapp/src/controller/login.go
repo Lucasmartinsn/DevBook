@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
+	"webapp/src/models"
 	"webapp/src/respostas"
+	"webapp/src/service"
 )
 
 // Essa função vai fazer a requisição de login
@@ -33,11 +34,14 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	
-	if token, err := io.ReadAll(response.Body); err != nil {
-		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+	var DadosAuth models.DatosAuth
+	if err = json.NewDecoder(response.Body).Decode(&DadosAuth); err != nil {
+		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
 		return
-	}else {
-		respostas.Json(w, response.StatusCode, string(token))
 	}
+	if err = service.Salvar(w, DadosAuth.IdUser, DadosAuth.Token); err != nil {
+		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	respostas.Json(w, response.StatusCode, nil)
 }

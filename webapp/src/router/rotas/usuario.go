@@ -13,6 +13,12 @@ var RotasUsuario = []Rota{
 		Funcao: controller.CarregarPageCadastro,
 		Auth:   false,
 	},
+	{
+		URI:    "/home",
+		Method: http.MethodGet,
+		Funcao: controller.CarregarPageHome,
+		Auth:   true,
+	},
 }
 
 // Rotas de consumo e manipulação dos dados

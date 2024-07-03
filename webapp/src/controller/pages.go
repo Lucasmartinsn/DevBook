@@ -13,3 +13,6 @@ func CarregarTelaLogin(w http.ResponseWriter, r *http.Request) {
 func CarregarPageCadastro(w http.ResponseWriter, r *http.Request) {
 	utils.ExecultarTemplate(w, "cadastroUser", nil)
 }
+func CarregarPageHome(w http.ResponseWriter, r *http.Request) {
+	utils.ExecultarTemplate(w, "home", nil)
+}

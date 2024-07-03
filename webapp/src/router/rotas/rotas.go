@@ -2,6 +2,7 @@ package rotas
 
 import (
 	"net/http"
+	"webapp/src/middleweres"
 
 	"github.com/gorilla/mux"
 )
@@ -20,7 +21,11 @@ func Configurar(router *mux.Router) *mux.Router {
 	rotas = append(rotas, RotasUsuario...)
 	rotas = append(rotas, RotasUsuarioCrud...)
 	for _, rota := range rotas {
-		router.HandleFunc(rota.URI, rota.Funcao).Methods(rota.Method)
+		if rota.Auth {
+			router.HandleFunc(rota.URI, middleweres.Logger(middleweres.Autenticacao(rota.Funcao))).Methods(rota.Method)
+		}else{
+			router.HandleFunc(rota.URI, middleweres.Logger(rota.Funcao)).Methods(rota.Method)
+		}
 	}
 
 	// Esta estrutura vai possibilitar que o Go consiga passar para o Navegador os Styles CSS

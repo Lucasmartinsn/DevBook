@@ -6,13 +6,10 @@ import (
 	"fmt"
 	"net/http"
 
-	// "os"
+	"os"
+	"webapp/src/models"
 	"webapp/src/respostas"
 )
-
-// Base URL
-// var url = os.Getenv("BASE_URL")
-var url = "http://localhost:5000/"
 
 // Vai chamar a API para a criaçao de um novo Cadastro de usuario
 func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +26,7 @@ func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	response, err := http.Post(fmt.Sprintf("%susuario", url), "application/json", bytes.NewBuffer(usuario))
+	response, err := http.Post(fmt.Sprintf("%susuario", os.Getenv("BASE_URL")), "application/json", bytes.NewBuffer(usuario))
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
@@ -40,5 +37,11 @@ func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	respostas.Json(w, response.StatusCode, nil)
+	var dadosAutenticacao models.DatosAuth
+	if err = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+
+	respostas.Json(w, 200, nil)
 }

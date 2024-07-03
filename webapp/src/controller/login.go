@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"webapp/src/respostas"
 )
 
@@ -22,7 +23,7 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	response, err := http.Post(fmt.Sprintf("%slogin", url), "application/json", bytes.NewBuffer(usuario))
+	response, err := http.Post(fmt.Sprintf("%slogin", os.Getenv("BASE_URL")), "application/json", bytes.NewBuffer(usuario))
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return

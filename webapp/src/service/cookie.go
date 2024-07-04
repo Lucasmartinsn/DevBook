@@ -13,8 +13,8 @@ func ConfigCookie() {
 	S = securecookie.New([]byte(os.Getenv("HASHKEY")), []byte(os.Getenv("BLOCKKEY")))
 }
 
-func Salvar(w http.ResponseWriter, id uint64, token string) error {
-	dados := map[string]any{
+func Salvar(w http.ResponseWriter, id, token string) error {
+	dados := map[string]string{
 		"id":    id,
 		"token": token,
 	}
@@ -32,12 +32,12 @@ func Salvar(w http.ResponseWriter, id uint64, token string) error {
 }
 
 // Var verificar de o usuario tem o Cookie
-func Ler(r *http.Request) (map[string]any, error) {
+func Ler(r *http.Request) (map[string]string, error) {
 	cookie, err := r.Cookie("dados")
 	if err != nil {
 		return nil, err
 	}
-	valores := make(map[string]any)
+	valores := make(map[string]string)
 	if err = S.Decode("dados", cookie.Value, &valores); err != nil {
 		return nil, err
 	}

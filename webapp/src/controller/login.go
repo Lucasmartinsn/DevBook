@@ -34,12 +34,12 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	var DadosAuth models.DatosAuth
+	var DadosAuth models.DadosAuth
 	if err = json.NewDecoder(response.Body).Decode(&DadosAuth); err != nil {
 		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	if err = service.Salvar(w, DadosAuth.IdUser, DadosAuth.Token); err != nil {
+	if err = service.Salvar(w, string(DadosAuth.IdUser), DadosAuth.Token); err != nil {
 		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
 		return
 	}

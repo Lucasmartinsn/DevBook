@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"os"
-	"webapp/src/models"
 	"webapp/src/respostas"
 )
 
@@ -37,11 +36,11 @@ func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	var dadosAutenticacao models.DatosAuth
-	if err = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); err != nil {
-		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
-		return
-	}
+	// var dadosAutenticacao models.DadosAuth
+	// if err = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); err != nil {
+	// 	respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+	// 	return
+	// }
 
 	respostas.Json(w, 200, nil)
 }

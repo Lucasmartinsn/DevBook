@@ -128,3 +128,9 @@ span {
     position: relative;
     left: 60px;
 }
+
+footer{
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}

@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"webapp/src/models"
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
+	"webapp/src/service"
 	"webapp/src/utils"
 )
 
@@ -39,5 +41,18 @@ func CarregarPageHome(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	utils.ExecultarTemplate(w, "home", publicacoes)
+
+	cookie, _ := service.Ler(r)
+	usuarioId, err := strconv.ParseUint(cookie["idUser"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	utils.ExecultarTemplate(w, "home", struct {
+		Publicacao []models.Publicacao
+		Id         uint64
+	}{
+		Publicacao: publicacoes,
+		Id:         usuarioId,
+	})
 }

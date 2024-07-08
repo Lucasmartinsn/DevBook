@@ -43,7 +43,7 @@ func CarregarPageHome(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cookie, _ := service.Ler(r)
-	usuarioId, err := strconv.ParseUint(cookie["idUser"], 10, 64)
+	usuarioId, err := strconv.ParseUint(cookie["id"], 10, 64)
 	if err != nil {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"webapp/src/models"
 	"webapp/src/respostas"
 	"webapp/src/service"
@@ -39,7 +40,9 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	if err = service.Salvar(w, string(DadosAuth.IdUser), DadosAuth.Token); err != nil {
+
+	id := strconv.FormatUint(DadosAuth.IdUser, 10)
+	if err = service.Salvar(w, id, DadosAuth.Token); err != nil {
 		respostas.Json(w, http.StatusUnprocessableEntity, respostas.ErrorApi{Error: err.Error()})
 		return
 	}

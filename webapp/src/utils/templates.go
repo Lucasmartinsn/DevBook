@@ -13,6 +13,7 @@ var templates *template.Template
 func CarregarTempletes() {
 	templates = template.Must(template.ParseGlob("views/*.html"))
 	templates = template.Must(templates.ParseGlob("views/templates/*.html"))
+	templates = template.Must(templates.ParseGlob("views/erros/*.html"))
 }
 
 // Essa funcao vai se auto execultar e vai renderizar uma pagina HTML

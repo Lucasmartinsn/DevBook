@@ -12,6 +12,7 @@ function criarPost(evento) {
         }
     }).done(function(data) {
         alert("Publicação criada com sucesso");
+        window.location.reload();
     }).fail(function(data) {
         console.log(data);
         alert("falha ao criada publicação");

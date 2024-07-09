@@ -9,7 +9,13 @@ var RotaPublicacao = []Rota{
 	{
 		URI:    "/publicacoes",
 		Method: http.MethodPost,
-		Funcao: controller.CarregarPagePublicacao,
+		Funcao: controller.CriarPublicacao,
+		Auth:   true,
+	},
+	{
+		URI:    "/publicacoes/{id}/curtir",
+		Method: http.MethodPost,
+		Funcao: controller.CurtirPublicacao,
 		Auth:   true,
 	},
 }

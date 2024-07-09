@@ -27,7 +27,7 @@
                   {{if (eq .AutorId $.Id)}}
                     {{template "publicacao-com-permicao" .}}
                   {{ else }}
-                    {{template "publicacao-com-permicao" .}}
+                    {{template "publicacao-sem-permicao" .}}
                   {{ end }}
               {{ end }}
             </div>

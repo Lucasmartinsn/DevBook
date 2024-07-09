@@ -44,7 +44,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	// Ele vai pegar o Bode da request e vai deixar os dados acessiveis para manipulação
 	parametro := mux.Vars(r)
-	postId, err := strconv.ParseUint(parametro["id"],10, 64)
+	postId, err := strconv.ParseUint(parametro["id"], 10, 64)
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return

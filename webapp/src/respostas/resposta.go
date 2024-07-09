@@ -21,6 +21,13 @@ func Json(w http.ResponseWriter, status int, data interface{}) {
 		}
 	}
 }
+func JsonLogin(w http.ResponseWriter, status int, data interface{}) {
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(status)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		log.Fatal(err)
+	}
+}
 
 // Vai tratar os Erros retornado no corpo(BODY) da requesição que foi retornada pela API
 func TratarRespostaErro(w http.ResponseWriter, r *http.Response) {

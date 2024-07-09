@@ -1,4 +1,5 @@
 $('#nova-publicacao').on('submit', criarPost);
+$('#curtir-postagem').on('submit', curtirPost)
 
 function criarPost(evento) {
     evento.preventDefault();
@@ -17,4 +18,8 @@ function criarPost(evento) {
         console.log(data);
         alert("falha ao criada publicação");
     });
+}
+
+function curtirPost(evento) {
+    evento.preventDefault();
 }

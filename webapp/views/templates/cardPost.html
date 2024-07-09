@@ -1,0 +1,40 @@
+{{ define "publicacao-com-permicao" }}
+<div class="card p-3 mb-3 container-fluid col-10" data-publicacao-id="{{ .Id }}">
+    <div class="card-body">
+        <h5 class="card-title fs-3">{{.Titulo}}</h5>
+        <p class="card-text">{{.Conteudo}}</p>
+        <a href="#">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
+        <hr>
+        <div class="d-flex justify-content-end">
+            <div style="position: relative; left: -15px;">
+                <p class="text-muted"><i class="bi bi-hand-thumbs-up"></i>{{.Curtidas}} Curtidas</p>
+            </div>
+            <div>
+                <a href="#" class="card-link"><i class="bi bi-pencil-square"></i> Editar</a>
+                <a href="#" class="card-link"><i class="bi bi-trash3-fill"></i>Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}
+
+{{ define "publicacao-sem-permicao" }}
+
+<div class="card p-3 mb-3 container-fluid col-10" data-publicacao-id="{{ .Id }}" >
+    <div class="card-body">
+        <h5 class="card-title fs-3">{{.Titulo}}</h5>
+        <p class="card-text">{{.Conteudo}}</p>
+        <a href="#">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
+        <hr>
+        <div class="d-flex justify-content-end align-items-center text-center"> 
+            <div style="position: relative; top: 7px; left: -15px;">
+                <p class="text-muted" ><i class="bi bi-hand-thumbs-up"></i>{{.Curtidas}} Curtidas</p>
+            </div>
+            <div >
+                <button class="btn btn-primary" type="button" id="curtir-postagem">Curtir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ end }}

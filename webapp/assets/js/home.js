@@ -1,5 +1,6 @@
 $('#nova-publicacao').on('submit', criarPost);
-$('.curtir-postagem').on('click', curtirPost)
+$('.curtir-post').on('click', curtirPost)
+$('.descurtir-post').on('click', descurtirPost)
 
 function criarPost(evento) {
     evento.preventDefault();
@@ -19,18 +20,32 @@ function criarPost(evento) {
         alert("falha ao criada publicação");
     });
 }
-
 function curtirPost(evento) {
     evento.preventDefault();
     // Aqui vai recuperar o id da publicação
     const idPost = $(this).closest('.card').data('publicacao-id');
-
     $.ajax({
         url: `/publicacoes/${idPost}/curtir`, // URL para onde enviar o POST
         type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
         dataType: 'json', // Tipo de dado esperado de retorno
     }).done(function(data) {
-        alert("Você curtiu essa Publicação");
+        // $(this).addClass('text-danger')
+        window.location.reload();
+    }).fail(function(data) {
+        console.log(data);
+        alert("falha ao curtir publicação");
+    });
+}
+function descurtirPost(evento) {
+    evento.preventDefault();
+    // Aqui vai recuperar o id da publicação
+    const idPost = $(this).closest('.card').data('publicacao-id');
+    $.ajax({
+        url: `/publicacoes/${idPost}/descurtir`, // URL para onde enviar o POST
+        type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
+        dataType: 'json', // Tipo de dado esperado de retorno
+    }).done(function(data) {
+        // $(this).remove('text-danger')
         window.location.reload();
     }).fail(function(data) {
         console.log(data);

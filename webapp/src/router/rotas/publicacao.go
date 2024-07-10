@@ -18,4 +18,10 @@ var RotaPublicacao = []Rota{
 		Funcao: controller.CurtirPublicacao,
 		Auth:   true,
 	},
+	{
+		URI:    "/publicacoes/{id}/descurtir",
+		Method: http.MethodPost,
+		Funcao: controller.DesCurtirPublicacao,
+		Auth:   true,
+	},
 }

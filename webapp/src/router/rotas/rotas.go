@@ -21,6 +21,7 @@ func Configurar(router *mux.Router) *mux.Router {
 	rotas = append(rotas, RotasUsuario...)
 	rotas = append(rotas, RotasUsuarioCrud...)
 	rotas = append(rotas, RotaPublicacao...)
+	rotas = append(rotas, RotaPublicacaoCrud...)
 	for _, rota := range rotas {
 		if rota.Auth {
 			router.HandleFunc(rota.URI, middleweres.Logger(middleweres.Autenticacao(rota.Funcao))).Methods(rota.Method)

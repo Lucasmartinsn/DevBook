@@ -11,6 +11,8 @@ import (
 	"webapp/src/respostas"
 	"webapp/src/service"
 	"webapp/src/utils"
+
+	"github.com/gorilla/mux"
 )
 
 // Essa funcao vai retorna a tela de login da aplicacao
@@ -55,4 +57,31 @@ func CarregarPageHome(w http.ResponseWriter, r *http.Request) {
 		Publicacao: publicacoes,
 		Id:         usuarioId,
 	})
+}
+
+// Essa funcao vai retorna a tela de cadastro da aplicacao
+func CarregarPageEditarPublicacao(w http.ResponseWriter, r *http.Request) {
+	parametro := mux.Vars(r)
+	postId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+	var publicacao models.Publicacao
+	if err = json.NewDecoder(response.Body).Decode(&publicacao); err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	utils.ExecultarTemplate(w, "editarPost", publicacao)
 }

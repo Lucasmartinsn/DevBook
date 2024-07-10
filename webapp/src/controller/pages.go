@@ -85,3 +85,53 @@ func CarregarPageEditarPublicacao(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.ExecultarTemplate(w, "editarPost", publicacao)
 }
+
+// Essa funcao vai retorna a tela de cadastro da aplicacao
+func CarregarPagePerfil(w http.ResponseWriter, r *http.Request) {
+	parametro := mux.Vars(r)
+	postId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	responsePublicacao, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer responsePublicacao.Body.Close()
+
+	responseUser, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer responseUser.Body.Close()
+
+	if responsePublicacao.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, responsePublicacao)
+		return
+	} else if responseUser.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, responseUser)
+		return
+	}
+
+	var publicacoes []models.Publicacao
+	if err = json.NewDecoder(responsePublicacao.Body).Decode(&publicacoes); err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	var usuario models.Usuario
+	if err = json.NewDecoder(responsePublicacao.Body).Decode(&usuario); err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+
+	utils.ExecultarTemplate(w, "perfilUser", struct{
+		Publicacoes []models.Publicacao;
+		Usuario models.Usuario
+	}{
+		Publicacoes: publicacoes,
+		Usuario: usuario,
+	})
+}

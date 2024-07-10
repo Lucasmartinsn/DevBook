@@ -94,14 +94,14 @@ func CarregarPagePerfil(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	responsePublicacao, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	responsePublicacao, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacao/usuario", os.Getenv("BASE_URL")), nil)
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
 	defer responsePublicacao.Body.Close()
 
-	responseUser, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	responseUser, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, fmt.Sprintf("%susuario/%d", os.Getenv("BASE_URL"), postId), nil)
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
@@ -122,16 +122,16 @@ func CarregarPagePerfil(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var usuario models.Usuario
-	if err = json.NewDecoder(responsePublicacao.Body).Decode(&usuario); err != nil {
+	if err = json.NewDecoder(responseUser.Body).Decode(&usuario); err != nil {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
 
-	utils.ExecultarTemplate(w, "perfilUser", struct{
-		Publicacoes []models.Publicacao;
-		Usuario models.Usuario
+	utils.ExecultarTemplate(w, "perfilUser", struct {
+		Publicacoes []models.Publicacao
+		Usuario     models.Usuario
 	}{
 		Publicacoes: publicacoes,
-		Usuario: usuario,
+		Usuario:     usuario,
 	})
 }

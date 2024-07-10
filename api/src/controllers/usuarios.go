@@ -67,7 +67,7 @@ func BuscaUsers(w http.ResponseWriter, r *http.Request) {
 }
 func BuscaUser(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
-	usuarioId, err := strconv.ParseUint(param["usuario"], 10, 64)
+	usuarioId, err := strconv.ParseUint(param["id"], 10, 64)
 	if err != nil {
 		resposta.Erro(w, 400, err)
 		return

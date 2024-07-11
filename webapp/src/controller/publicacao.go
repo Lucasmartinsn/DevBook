@@ -37,7 +37,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	respostas.Json(w, response.StatusCode, nil)
+	respostas.Json(w, response.StatusCode, "success")
 }
 
 // Vai curtir uma publicação
@@ -61,7 +61,7 @@ func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	respostas.Json(w, response.StatusCode, nil)
+	respostas.Json(w, response.StatusCode, "success")
 }
 
 // Vai curtir uma publicação
@@ -85,7 +85,7 @@ func DesCurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	respostas.Json(w, response.StatusCode, nil)
+	respostas.Json(w, response.StatusCode, "success")
 }
 
 // Vai editar uma publicação

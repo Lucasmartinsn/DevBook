@@ -40,7 +40,7 @@ func CadastroOfUser(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
-	respostas.Json(w, 200, nil)
+	respostas.Json(w, 200, "success")
 }
 
 // Vai chamar a API para atualizar o Cadastro do usuario

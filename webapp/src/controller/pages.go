@@ -83,7 +83,21 @@ func CarregarPageEditarPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	utils.ExecultarTemplate(w, "editarPost", publicacao)
+
+	cookie, _ := service.Ler(r)
+	usuarioId, err := strconv.ParseUint(cookie["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+
+	utils.ExecultarTemplate(w, "editarPost", struct{
+		Publicacao models.Publicacao;
+		Id uint64
+	}{
+		Publicacao: publicacao,
+		Id: usuarioId,
+	})
 }
 
 // Essa funcao vai retorna a tela de cadastro da aplicacao

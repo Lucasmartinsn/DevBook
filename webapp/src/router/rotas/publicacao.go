@@ -27,7 +27,7 @@ var RotaPublicacaoCrud = []Rota{
 	},
 	{
 		URI:    "/publicacoes/{id}",
-		Method: http.MethodPost,
+		Method: http.MethodPut,
 		Funcao: controller.EditarPublicacao,
 		Auth:   true,
 	},

@@ -99,25 +99,27 @@ func EditarPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	// Capturando os dados do Body e transformando em um array de Bytes
-	publicacao, err := json.Marshal(map[string]string{
-		"titulo":   r.FormValue("titulo"),
-		"conteudo": r.FormValue("conteudo"),
-	})
-	if err != nil {
-		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
-		return
-	}
-	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPost, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), bytes.NewBuffer(publicacao))
-	if err != nil {
-		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
-		return
-	}
-	defer response.Body.Close()
+	// // Capturando os dados do Body e transformando em um array de Bytes
+	// publicacao, err := json.Marshal(map[string]string{
+	// 	"titulo":   r.FormValue("titulo"),
+	// 	"conteudo": r.FormValue("conteudo"),
+	// })
+	// if err != nil {
+	// 	respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+	// 	return
+	// }
+	// response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPut, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), bytes.NewBuffer(publicacao))
+	// if err != nil {
+	// 	respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+	// 	return
+	// }
+	// defer response.Body.Close()
 
-	if response.StatusCode >= 400 {
-		respostas.TratarRespostaErro(w, response)
-		return
-	}
-	respostas.Json(w, response.StatusCode, nil)
+	// if response.StatusCode >= 400 {
+	// 	respostas.TratarRespostaErro(w, response)
+	// 	return
+	// }
+	// respostas.Json(w, response.StatusCode, "success")
+
+	fmt.Println(postId)
 }

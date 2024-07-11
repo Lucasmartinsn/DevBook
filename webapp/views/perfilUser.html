@@ -3,21 +3,22 @@
     <div class="container-fluid col-12">
         <div class="row mt-4 col-12">
             <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="shadow p-3 mb-5 bg-body rounded">
+                <div class="shadow p-3 mb-5 bg-body rounded" style="height: 665px;">
+                    <input type="hidden" id="userID" value="{{ .Usuario.Id }}">
                     <form id="formulario-atualiza-cadastro">
-                        <div class="col-10" style="position: relative; left: 50px;">
+                        <div class="col-10 position-relative" style="left: 50px;">
                             <span class="fs-5">Atualizar seus dados:</span>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="nome" class="form-label">Nome:</label>
                                 <input type="text" class="form-control" name="nome" id="nome" placeholder="{{ .Usuario.Nome }}"
                                     required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="nick" class="form-label">Nick:</label>
                                 <input type="text" class="form-control" name="nick" id="nick" placeholder="{{ .Usuario.Nick }}"
                                     required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="email" class="form-label">Email:</label>
                                 <input type="email" class="form-control" name="email" id="email"
                                     placeholder="{{ .Usuario.Email }}" required>
@@ -29,19 +30,26 @@
                     </form>
                     <hr>
                     <form id="formulario-atualizar-senha-cadastro">
-                        <div class="col-10">
-                            <div class="mb-3"  style="position: relative; left: 50px;">
-                                <span class="fs-5">Atualizar senha:</span>
-                                <label for="senha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control" minlength="8" name="senha" id="senha"
-                                    placeholder="*********" required>
-                                <div class="mb-3">
-                                    <label for="senha" class="form-label">Confirmar Senha:</label>
-                                    <input type="text" class="form-control" minlength="8" name="ConfirmarSenha"
-                                        id="ConfirmarSenha" placeholder="*********" required>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div class="col-10 position-relative" style="left: 50px;">
+                            <span class="fs-5">Atualizar senha:</span>
+                            <div class="mb-2">
+                                <label for="Senha Atual" class="form-label">Senha Atual:</label>
+                                <input type="password" class="form-control" name="atual"
+                                    id="atual" placeholder="*********" required>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="mb-2 col-9">
+                                    <label for="senha" class="form-label">Nova Senha:</label>
+                                    <input type="password" class="form-control" minlength="8" name="senha" id="senha"
+                                        placeholder="*********" required>
+                                    <div class="mb-2">
+                                        <label for="senha" class="form-label">Confirmar Senha:</label>
+                                        <input type="password" class="form-control" minlength="8" name="ConfirmarSenha"
+                                            id="ConfirmarSenha" placeholder="*********" required>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +57,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4 container-fluid">
-                <div class="col-5" style="position: relative; left: 47.5%;">
+                <div class="col-5 position-relative" style="left: 47.5%;">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="valor-input-publicacao">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>

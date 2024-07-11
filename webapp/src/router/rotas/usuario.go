@@ -35,4 +35,16 @@ var RotasUsuarioCrud = []Rota{
 		Funcao: controller.CadastroOfUser,
 		Auth:   false,
 	},
+	{
+		URI:    "/usuario/{id}",
+		Method: http.MethodPut,
+		Funcao: controller.AtualizarDataUser,
+		Auth:   false,
+	},
+	{
+		URI:    "/usuario/{id}/atualizar-pass",
+		Method: http.MethodPut,
+		Funcao: controller.AtualizarPassUser,
+		Auth:   false,
+	},
 }

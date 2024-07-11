@@ -63,7 +63,7 @@ var rotasUser = []Rota{
 	},
 	{
 		Uri:                 "/usuario/{id}/atualizar-pass",
-		Metodo:              http.MethodPost,
+		Metodo:              http.MethodPut,
 		Funcao:              controllers.AtualizarUserPass,
 		ResquerAutntication: true,
 	},

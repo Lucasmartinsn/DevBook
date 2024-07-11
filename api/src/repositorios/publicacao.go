@@ -47,9 +47,10 @@ func (repositorio publicacao) BuscarPublicacao(id uint64) (modelos.Publicacao, e
 	return publicacao, nil
 }
 func (repositorio publicacao) BuscarPublicacoes(id uint64) ([]modelos.Publicacao, error) {
-	linhas, err := repositorio.db.Query(`select distinct p.*, u.nick from publicacao p 
-		inner join usuario u on u.id = p.autorId 
-		inner join seguidores s on p.autorId = s.usuarioId where p.id = ? or s.seguidoresId = ? order by 1 desc`, id, id)
+	linhas, err := repositorio.db.Query(`SELECT DISTINCT p.*, u.nick FROM publicacao p
+		INNER JOIN usuario u ON u.id = p.autorId
+		INNER JOIN seguidores s ON p.autorId = s.seguidoresId
+		WHERE p.autorId = ? OR s.usuarioId = ? ORDER BY p.id DESC;`, id, id)
 	if err != nil {
 		return nil, err
 	}

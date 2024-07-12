@@ -174,7 +174,7 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 500, err)
 		return
 	}
-	resposta.Json(w, 204, nil)
+	resposta.Json(w, 200, nil)
 }
 func BuscarPublicacaoUser(w http.ResponseWriter, r *http.Request) {
 	userId, err := autenticacao.ExtrairID(r)

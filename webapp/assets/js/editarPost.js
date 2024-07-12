@@ -14,11 +14,18 @@ function editarPost(evento) {
             conteudo: $('#conteudo').val(),
         }
     }).done(function(data) {
-        alert("Publicação atualizada com sucesso");
+        Swal.fire({
+            title: "Publicação atualizada com Sucesso!",
+            icon: "success"
+        }).then(() => {
         history.back();
+        });
     }).fail(function(data) {
         console.log(data);
-        alert("falha ao atualizar publicação");
+        Swal.fire({
+            title: "Falha ao atualizar publicação!",
+            icon: "error"
+        });
     }).always(function() {
         $('#editar-publicacao').prop('disabled', false)
     }) ;

@@ -13,11 +13,18 @@ function criarPost(evento) {
             conteudo: $('#conteudo').val(),
         }
     }).done(function(data) {
-        alert("Publicação criada com sucesso");
-        window.location.reload();
+        Swal.fire({
+            title: "Publicação criada com Sucesso!",
+            icon: "success"
+        }).then(() => {
+            window.location.reload();
+        });
     }).fail(function(data) {
         console.log(data);
-        alert("falha ao criada publicação");
+        Swal.fire({
+            title: "Falha ao criar publicação!",
+            icon: "error"
+        });
     });
 }
 function curtirPost(evento) {
@@ -25,30 +32,33 @@ function curtirPost(evento) {
     // Aqui vai recuperar o id da publicação
     const idPost = $(this).closest('.card').data('publicacao-id');
     $.ajax({
-        url: `/publicacoes/${idPost}/curtir`, // URL para onde enviar o POST
-        type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
+        url: `/publicacoes/${idPost}/curtir`,
+        type: 'POST',
+        dataType: 'json',
     }).done(function(data) {
-        // $(this).addClass('text-danger')
         window.location.reload();
     }).fail(function(data) {
         console.log(data);
-        alert("falha ao curtir publicação");
+        Swal.fire({
+            title: "Falha ao curtir publicação!",
+            icon: "error"
+        });
     });
 }
 function descurtirPost(evento) {
     evento.preventDefault();
-    // Aqui vai recuperar o id da publicação
     const idPost = $(this).closest('.card').data('publicacao-id');
     $.ajax({
-        url: `/publicacoes/${idPost}/descurtir`, // URL para onde enviar o POST
-        type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
+        url: `/publicacoes/${idPost}/descurtir`,
+        type: 'POST',
+        dataType: 'json',
     }).done(function(data) {
-        // $(this).remove('text-danger')
         window.location.reload();
     }).fail(function(data) {
         console.log(data);
-        alert("falha ao curtir publicação");
+        Swal.fire({
+            title: "Falha ao curtir publicação!",
+            icon: "error"
+        });
     });
 }

@@ -1,47 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevBook</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-</head>
-<body>
-    <div class="container-cadastro">
-        <div class="devbook-form2div">
-            <form id="formulario-cadastro">
-                <span>Realize seu cadastro agora em DevBook</span>
-                <div class="container-cadastro-inputs">
-                    <div>
-                        <label for="nome">Nome:</label>
-                        <input type="text" name="nome" id="nome" placeholder="usuario" required>
-                    </div>
-                    <div>
-                        <label for="nick">Nick:</label>
-                        <input type="text" name="nick" id="nick" placeholder="usuario123" required>
-                    </div>
-                    <div>
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" id="email" placeholder="usuario@gmail.com" required>
-                    </div>
-                    <div>
-                        <label for="senha">Senha:</label>
-                        <input type="password" minlength="8" name="senha" id="senha" placeholder="*********" required>
-                        <div>
-                            <label for="senha">Confirmar Senha:</label>
-                            <input type="text" minlength="8" name="ConfirmarSenha" id="ConfirmarSenha" placeholder="*********" required>
+{{ template "headerImcompleto" }}
+
+    <div class="container-fluid col-12 d-flex align-items-center justify-content-center" style="height: 90vh; background-color: aliceblue;">
+        <div class="col-7 d-flex justify-content-center">
+            <div class="shadow p-3 mb-5 bg-body rounded col-6 d-flex justify-content-center">
+                <form id="formulario-cadastro">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                        <span class="fs-5"><strong>Realize seu cadastro agora em DevBook!</strong></span>
+                        <div class="mb-3 mt-2">
+                            <label class="form-label" for="nome">Nome:</label>
+                            <input class="form-control" type="text" name="nome" id="nome" placeholder="usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="nick">Nick:</label>
+                            <input class="form-control" type="text" name="nick" id="nick" placeholder="usuario123" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email:</label>
+                            <input class="form-control" type="email" name="email" id="email" placeholder="usuario@gmail.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="senha">Senha:</label>
+                            <input class="form-control" type="password" minlength="8" name="senha" id="senha" placeholder="*********" required>
+                            <div class="mb-3">
+                                <label class="form-label" for="senha">Confirmar Senha:</label>
+                                <input class="form-control" type="text" minlength="8" name="ConfirmarSenha" id="ConfirmarSenha" placeholder="*********" required>
+                            </div>
+                        </div>
+                        <div class=" mb-3 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
                     </div>
-                    <div class="btn-conteiner btn-devbook-cadastro">
-                        <button type="submit" class="btn-devbook">Cadastrar</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
     <!-- Importe do da biblioteca Jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="/assets/js/cadastro.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-</html>
+
+{{ template "footer"}}

@@ -7,15 +7,22 @@ function deletarPost(evento) {
     const idPost = $(this).closest('.card').data('publicacao-id');
 
     $.ajax({
-        url: `/publicacoes/${idPost}`, // URL para onde enviar o POST
-        type: 'DELETE', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
-    }).done(function(data) {
-        alert("Publicacao deletada com sucesso");
-        window.location.reload();
-    }).fail(function(data) {
+        url: `/publicacoes/${idPost}`,
+        type: 'DELETE',
+        dataType: 'json',
+    }).done(function (data) {
+        Swal.fire({
+            title: "Publicacao deletada com sucesso!",
+            icon: "success"
+        }).then(() => {
+            window.location.reload();
+        });
+    }).fail(function (data) {
         console.log(data.responseJSON);
-        alert("falha ao deletar publicação");
+        Swal.fire({
+            title: "Falha ao deletar publicação!",
+            icon: "error"
+        });
     });
 }
 
@@ -24,20 +31,28 @@ function atualizarUser(evento) {
     var id = $('#userID').val();
 
     $.ajax({
-        url: `/usuario/${id}`, // URL para onde enviar o POST
-        type: 'PUT', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
+        url: `/usuario/${id}`,
+        type: 'PUT',
+        dataType: 'json',
         data: {
             nome: $('#nome').val(),
             nick: $('#nick').val(),
             email: $('#email').val(),
         }
-    }).done(function(data) {
-        alert("cadastrado com sucesso");
-        window.location.reload();
-    }).fail(function(data) {
+    }).done(function (data) {
+        Swal.fire({
+            title: "Cadastrado com sucesso!",
+            icon: "success"
+        }).then(() => {
+            window.location.reload();
+        });
+    }).fail(function (data) {
         console.log(data.responseJSON);
-        alert("falha ao atualizar usuario: Nick ou email ja em uso");
+        Swal.fire({
+            title: "Falha ao atualizar usuario!",
+            text: "Nick ou email ja em uso",
+            icon: "error"
+        });
     });
 }
 
@@ -51,18 +66,25 @@ function atualizarSenhaUser(evento) {
     }
 
     $.ajax({
-        url: `/usuario/${id}/atualizar-pass`, // URL para onde enviar o POST
-        type: 'PUT', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
+        url: `/usuario/${id}/atualizar-pass`,
+        type: 'PUT',
+        dataType: 'json',
         data: {
             atual: $('#atual').val(),
             senha: $('#senha').val(),
         }
-    }).done(function(data) {
-        alert("senha atualizada com sucesso");
-        window.location.reload();
-    }).fail(function(data) {
+    }).done(function (data) {
+        Swal.fire({
+            title: "Senha atualizada com sucesso!",
+            icon: "success"
+        }).then(() => {
+            window.location.reload();
+        });
+    }).fail(function (data) {
         console.log(data.responseJSON);
-        alert("falha ao atualizar usuario");
+        Swal.fire({
+            title: "Falha ao atualizar usuario!",
+            icon: "error"
+        });
     });
 }

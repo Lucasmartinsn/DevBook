@@ -12,10 +12,17 @@ function fazerLogin(evento) {
             // adicione mais campos conforme necessário
         }
     }).done(function() {
-        alert("Bem vindo ao Devbook");
-        window.location = "/home"
+        Swal.fire({
+            title: "Bem vindo ao Devbook!",
+            icon: "success"
+        }).then(() => {
+            window.location = "/home"
+        });
     }).fail(function(data) {
         console.log(data.responseJSON);
-        alert("falha ao fazer Login");
+        Swal.fire({
+            title: "Falha ao fazer Login!",
+            icon: "error"
+        });
     });
 }

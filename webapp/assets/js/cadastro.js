@@ -25,8 +25,9 @@ function criarUser(evento) {
             title: "Cadastro realizado!",
             text: "Click no botão para voltar para a pagina de login!",
             icon: "success"
+          }).then(() => {
+            window.location = "/";
           });
-        history.back();
     }).fail(function(data) {
         console.log(data.responseJSON);
         Swal.fire({

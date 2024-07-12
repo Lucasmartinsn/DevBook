@@ -40,6 +40,28 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 	respostas.Json(w, response.StatusCode, "success")
 }
 
+// Vai deletar uma publicacao do usuario
+func DeletePublicacao(w http.ResponseWriter, r *http.Request) {
+	// Ele vai pegar o Bode da request e vai deixar os dados acessiveis para manipulação
+	parametro := mux.Vars(r)
+	postId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodDelete, fmt.Sprintf("%spublicacoes/%d", os.Getenv("BASE_URL"), postId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+	respostas.Json(w, response.StatusCode, "success")
+}
 // Vai curtir uma publicação
 func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	// Ele vai pegar o Bode da request e vai deixar os dados acessiveis para manipulação

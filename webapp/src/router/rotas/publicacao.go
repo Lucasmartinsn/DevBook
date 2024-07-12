@@ -31,6 +31,12 @@ var RotaPublicacaoCrud = []Rota{
 		Funcao: controller.EditarPublicacao,
 		Auth:   true,
 	},
+	{
+		URI:    "/publicacoes/{id}",
+		Method: http.MethodDelete,
+		Funcao: controller.DeletePublicacao,
+		Auth:   true,
+	},
 }
 // Rotas que carregam paginas html
 var RotaPublicacao = []Rota{

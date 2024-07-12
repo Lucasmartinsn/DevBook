@@ -3,7 +3,11 @@ $('#formulario-cadastro').on('submit', criarUser);
 function criarUser(evento) {
     evento.preventDefault();
     if ($('#senha').val() != $('#ConfirmarSenha').val()) {
-        alert("senhas nao coencidem");
+        Swal.fire({
+            title: "Senhas não Coincidem!",
+            text: "Click no botão para tentar novamente!",
+            icon: "error"
+          });
         return
     }
     $.ajax({
@@ -15,16 +19,21 @@ function criarUser(evento) {
             nick: $('#nick').val(),
             email: $('#email').val(),
             senha: $('#senha').val(),
-            // adicione mais campos conforme necessário
         }
     }).done(function(data) {
-        alert("usuario cadastrado com sucesso");
-        window.location.reload();
-        alert("Voltando para a pagina de Login");
+        Swal.fire({
+            title: "Cadastro realizado!",
+            text: "Click no botão para voltar para a pagina de login!",
+            icon: "success"
+          });
         history.back();
     }).fail(function(data) {
         console.log(data.responseJSON);
-        alert("falha ao cadastra usuario");
+        Swal.fire({
+            title: "Falha ao realizar o Cadastro!",
+            text: "Click no botão para tentar novamente!",
+            icon: "error"
+          });
     });
 
 }

@@ -3,7 +3,7 @@ $('#editar-publicacao').on('submit', editarPost);
 function editarPost(evento) {
     evento.preventDefault();
     $(this).prop('disabled', true)
-    var id = $('#userID').val();
+    var id = $('#postID').val();
 
     $.ajax({
         url: `/publicacoes/${id}`, // URL para onde enviar o POST

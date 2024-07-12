@@ -91,12 +91,12 @@ func CarregarPageEditarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.ExecultarTemplate(w, "editarPost", struct{
-		Publicacao models.Publicacao;
-		Id uint64
+	utils.ExecultarTemplate(w, "editarPost", struct {
+		Publicacao models.Publicacao
+		Id         uint64
 	}{
 		Publicacao: publicacao,
-		Id: usuarioId,
+		Id:         usuarioId,
 	})
 }
 
@@ -144,8 +144,10 @@ func CarregarPagePerfil(w http.ResponseWriter, r *http.Request) {
 	utils.ExecultarTemplate(w, "perfilUser", struct {
 		Publicacoes []models.Publicacao
 		Usuario     models.Usuario
+		Id          uint64
 	}{
 		Publicacoes: publicacoes,
 		Usuario:     usuario,
+		Id:          usuario.Id,
 	})
 }

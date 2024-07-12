@@ -19,6 +19,9 @@ function criarUser(evento) {
         }
     }).done(function(data) {
         alert("usuario cadastrado com sucesso");
+        window.location.reload();
+        alert("Voltando para a pagina de Login");
+        history.back();
     }).fail(function(data) {
         console.log(data.responseJSON);
         alert("falha ao cadastra usuario");

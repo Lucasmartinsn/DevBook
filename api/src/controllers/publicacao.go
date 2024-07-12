@@ -140,7 +140,7 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 400, err)
 		return
 	}
-	resposta.Json(w, 204, nil)
+	resposta.Json(w, 200, nil)
 }
 func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
@@ -195,7 +195,6 @@ func BuscarPublicacaoUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resposta.Json(w, 200, publicacoes)
-
 }
 func LikePublicacao(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
@@ -229,7 +228,7 @@ func LikePublicacao(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 500, err)
 		return
 	}
-	resposta.Json(w, 204, nil)
+	resposta.Json(w, 200, nil)
 }
 func UnlikePublicacao(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
@@ -263,5 +262,5 @@ func UnlikePublicacao(w http.ResponseWriter, r *http.Request) {
 		resposta.Erro(w, 500, err)
 		return
 	}
-	resposta.Json(w, 204, nil)
+	resposta.Json(w, 200, nil)
 }

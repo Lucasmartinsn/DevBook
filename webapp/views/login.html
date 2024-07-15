@@ -1,36 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+{{ template "headerImcompleto"}}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevBook</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
-</head>
+<style>
+    body {background-color: aliceblue;}
+    /* span {
+    color: #3b5998;
+    line-height: 1.2;
+    display: block;
+} */
+</style>
 
-<body>
-    <div class="container-login">
-        <div class="devbook-form2div">
-            <form id="login">
-                <span>Seja bem vindo ao DevBook</span>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="usuario@gmail.com" required>
-                </div>
-                <div>
-                    <label for="senha">Senha:</label>
-                    <input type="password" name="senha" id="senha" placeholder="*********" required>
-                </div>
-                <div class="btn-conteiner">
-                    <a href="/criar-usuario">Click aqui e se Cadastre</a>
-                    <button type="submit" class="btn-devbook">Login</button>
-                </div>
-            </form>
+<main>
+    <div class="container-fluid col-12 d-flex align-items-center justify-content-center" style="height: 90vh;">
+        <div class="col-10 d-flex justify-content-center"> 
+            <div class="col-3 d-flex justify-content-center fs-5 ">
+                <form id="login">
+                    <span class="fs-4 text-center pb-3 text-primary">Seja bem vindo ao DevBook</span>
+                    <div class="mb-3">
+                        <label class="form-label"  for="email">Email:</label>
+                        <input class="form-control form-control-lg" type="email" name="email" id="email" placeholder="usuario@gmail.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="senha">Senha:</label>
+                        <input class="form-control form-control-lg" type="password" name="senha" id="senha" placeholder="*********" required>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-evenly m-2 p-2 fs-6">
+                        <a href="/criar-usuario">Click aqui e se Cadastre</a>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-     <!-- Importe do da biblioteca Jquery -->
-     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-     <script src="/assets/js/login.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-</html>
+</main>
+ <!-- Importe do da biblioteca Jquery -->
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ <script src="/assets/js/login.js"></script>
+{{ template "footer"}}

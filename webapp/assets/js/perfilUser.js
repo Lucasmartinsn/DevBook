@@ -6,24 +6,35 @@ function deletarPost(evento) {
     evento.preventDefault();
     const idPost = $(this).closest('.card').data('publicacao-id');
 
-    $.ajax({
-        url: `/publicacoes/${idPost}`,
-        type: 'DELETE',
-        dataType: 'json',
-    }).done(function (data) {
-        Swal.fire({
-            title: "Publicacao deletada com sucesso!",
-            icon: "success"
-        }).then(() => {
-            window.location.reload();
-        });
-    }).fail(function (data) {
-        console.log(data.responseJSON);
-        Swal.fire({
-            title: "Falha ao deletar publicação!",
-            icon: "error"
+    Swal.fire({
+        title: "Atenção!",
+        text: "tem certeza que deseja excluir essa Publicação?",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+    }).then((confirmacao) => {
+        if (!confirmacao.value) return;
+
+        $.ajax({
+            url: `/publicacoes/${idPost}`,
+            type: 'DELETE',
+            dataType: 'json',
+        }).done(function (data) {
+            Swal.fire({
+                title: "Publicacao deletada com sucesso!",
+                icon: "success"
+            }).then(() => {
+                window.location.reload();
+            });
+        }).fail(function (data) {
+            console.log(data.responseJSON);
+            Swal.fire({
+                title: "Falha ao deletar publicação!",
+                icon: "error"
+            });
         });
     });
+
 }
 
 function atualizarUser(evento) {

@@ -2,6 +2,7 @@ $('#login').on('submit', fazerLogin);
 
 function fazerLogin(evento) {
     evento.preventDefault();
+   
     $.ajax({
         url: '/login', // URL para onde enviar o POST
         type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
@@ -22,7 +23,8 @@ function fazerLogin(evento) {
         console.log(data.responseJSON);
         Swal.fire({
             title: "Falha ao fazer Login!",
-            icon: "error"
+            icon: "error",
+            text:"Usuario ou senha Invalidos!"
         });
     });
 }

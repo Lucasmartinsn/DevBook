@@ -4,28 +4,40 @@ $('.descurtir-post').on('click', descurtirPost)
 
 function criarPost(evento) {
     evento.preventDefault();
-    $.ajax({
-        url: '/publicacoes', // URL para onde enviar o POST
-        type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
-        dataType: 'json', // Tipo de dado esperado de retorno
-        data: {
-            titulo: $('#titulo').val(),
-            conteudo: $('#conteudo').val(),
-        }
-    }).done(function(data) {
-        Swal.fire({
-            title: "Publicação criada com Sucesso!",
-            icon: "success"
-        }).then(() => {
-            window.location.reload();
+    Swal.fire({
+        title: "Atenção!",
+        text: "Vocer deseja realizar a Publicação?",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+    }).then((confirmacao) => {
+        if (!confirmacao.isConfirmed) return;
+    
+        $.ajax({
+            url: '/publicacoes', // URL para onde enviar o POST
+            type: 'POST', // Método HTTP a ser utilizado (GET, POST, etc.)
+            dataType: 'json', // Tipo de dado esperado de retorno
+            data: {
+                titulo: $('#titulo').val(),
+                conteudo: $('#conteudo').val(),
+            }
+        }).done(function(data) {
+            Swal.fire({
+                title: "Publicação criada com Sucesso!",
+                icon: "success"
+            }).then(() => {
+                window.location.reload();
+            });
+        }).fail(function(data) {
+            console.log(data);
+            Swal.fire({
+                title: "Falha ao criar publicação!",
+                icon: "error"
+            });
         });
-    }).fail(function(data) {
-        console.log(data);
-        Swal.fire({
-            title: "Falha ao criar publicação!",
-            icon: "error"
-        });
+        
     });
+
 }
 function curtirPost(evento) {
     evento.preventDefault();

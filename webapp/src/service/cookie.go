@@ -3,6 +3,7 @@ package service
 import (
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/securecookie"
 )
@@ -43,4 +44,15 @@ func Ler(r *http.Request) (map[string]string, error) {
 	}
 
 	return valores, nil
+}
+
+// Essa função vai apagar o Cookie
+func Delete(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "dados",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		Expires:  time.Unix(0, 0),
+	})
 }

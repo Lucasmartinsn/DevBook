@@ -10,6 +10,7 @@ import (
 	"os"
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
+	"webapp/src/service"
 
 	"github.com/gorilla/mux"
 )
@@ -64,7 +65,7 @@ func AtualizarDataUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPut, fmt.Sprintf("%susuario/%d", os.Getenv("BASE_URL"),userId), bytes.NewBuffer(usuario))
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPut, fmt.Sprintf("%susuario/%d", os.Getenv("BASE_URL"), userId), bytes.NewBuffer(usuario))
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
@@ -98,17 +99,22 @@ func AtualizarPassUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPut, fmt.Sprintf("%susuario/%d/atualizar-pass", os.Getenv("BASE_URL"),userId), bytes.NewBuffer(usuario))
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPut, fmt.Sprintf("%susuario/%d/atualizar-pass", os.Getenv("BASE_URL"), userId), bytes.NewBuffer(usuario))
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
 	defer response.Body.Close()
 
-
 	if response.StatusCode >= 400 {
 		respostas.TratarRespostaErro(w, response)
 		return
 	}
 	respostas.Json(w, 200, "success")
+}
+
+// Essa função vai apagar o Cookie
+func DeletarCookie(w http.ResponseWriter, r *http.Request) {
+	service.Delete(w)
+	http.Redirect(w, r, "/", http.StatusFound)
 }

@@ -28,3 +28,13 @@ create table publicacao (
     criadaEm timestamp default current_timestamp(),
     foreign key (autorId) references usuario(id) on delete cascade
 );
+
+INSERT INTO usuario (nome, nick, email, senha) 
+values ('antonio', 'antonio', 'antonio@gmail','$2a$10$yFf4fMGsbd5027SMpqCz0eyctoArmks9GeF5QT0nDi4x7p9Xy2bRa');
+
+INSERT INTO usuario (nome, nick, email, senha) 
+values ('nobre', 'nobre', 'nobre@gmail','$2a$10$yFf4fMGsbd5027SMpqCz0eyctoArmks9GeF5QT0nDi4x7p9Xy2bRa');
+
+INSERT INTO usuario (nome, nick, email, senha) 
+values ('lucas', 'lucas', 'lucas@gmail','$2a$10$yFf4fMGsbd5027SMpqCz0eyctoArmks9GeF5QT0nDi4x7p9Xy2bRa');
+

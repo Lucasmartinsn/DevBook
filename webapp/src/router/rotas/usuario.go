@@ -25,6 +25,12 @@ var RotasUsuario = []Rota{
 		Funcao: controller.CarregarPagePerfil,
 		Auth:   true,
 	},
+	{
+		URI:    "/buscar-usuarios",
+		Method: http.MethodGet,
+		Funcao: controller.CarregarPagePerfilUsuarios,
+		Auth:   true,
+	},
 }
 
 // Rotas de consumo e manipulação dos dados

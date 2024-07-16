@@ -1,0 +1,29 @@
+{{ template "header" }}
+
+<main>
+    <div class="container-fluid col-12 ">
+        <div class="container-fluid col-10">
+            <div class="container-fluid d-flex justify-content-center">
+                <h1 class="fs-4 text-primary mt-5"> Resultado da sua busca: </h1>
+            </div>
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <div class="row d-flex flex-wrap overflow-auto" style="height: 565px;">
+                    {{ range .Usuario }}
+                        {{ template "cardUser" .}}
+                    {{ else }}
+                        <div class="conteiner-fluid d-flex justify-content-center">
+                            <p class="fs-4">
+                                <strong>Nenhum resultado encontrado para a busca Passada</strong>
+                                <i class="bi bi-emoji-frown" style="font-size: 50px;"></i>
+                            </p>
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</main>
+
+
+{{ template "footer" }}

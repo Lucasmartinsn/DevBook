@@ -18,12 +18,14 @@ type Publicacao struct {
 }
 
 type Usuario struct {
-	Id        uint64    `json:"id,omitempty"`
-	Nome      string    `json:"nome,omitempty"`
-	Nick      string    `json:"nick,omitempty"`
-	Email     string    `json:"email,omitempty"`
-	Senha     string    `json:"senha,omitempty"`
-	CriacaoEM time.Time `json:"criacaoEm,omitempty"`
+	Id          uint64       `json:"id,omitempty"`
+	Nome        string       `json:"nome,omitempty"`
+	Nick        string       `json:"nick,omitempty"`
+	Email       string       `json:"email,omitempty"`
+	CriacaoEM   time.Time    `json:"criacaoEm,omitempty"`
+	Seguidores  []Usuario    `json:"seguidores,omitempty"`
+	Seguindo    []Usuario    `json:"seguindo,omitempty"`
+	Publicacoes []Publicacao `json:"publicacoes,omitempty"`
 }
 
 type Senha struct {

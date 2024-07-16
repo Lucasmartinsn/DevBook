@@ -58,10 +58,10 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4 container-fluid">
                 <div class="col-5 position-relative" style="left: 47.5%;">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="valor-input-publicacao">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    </div>
+                    <form class="d-flex" role="search" action="/buscar-publicacao" method="get">
+                        <input class="form-control" type="search" placeholder="Buscar Publicacões" aria-label="Search" 
+                            id="publicacao" name="publicacao" required>
+                    </form>
                 </div>
                 <div class="shadow-sm p-3 mb-5 bg-body rounded w-100 d-flex justify-content-center overflow-auto" style="height: 587px;">
                     <div class="col-12">

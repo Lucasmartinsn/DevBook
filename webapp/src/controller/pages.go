@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"webapp/src/models"
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
@@ -154,5 +155,32 @@ func CarregarPagePerfil(w http.ResponseWriter, r *http.Request) {
 		Publicacoes: publicacoes,
 		Usuario:     usuario,
 		Id:          usuario.Id,
+	})
+}
+
+// vai carregar todos os perfies de usarios que retornaram da API
+func CarregarPagePerfilUsuarios(w http.ResponseWriter, r *http.Request) {
+	nomeOrNick := strings.ToLower(r.URL.Query().Get("usuario"))
+	url := fmt.Sprintf("%s/usuario?usuario=%s", os.Getenv("BASE_URL"), nomeOrNick)
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, url, nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+	var usuarios []models.Usuario
+	if err = json.NewDecoder(response.Body).Decode(&usuarios); err != nil {
+		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+
+	utils.ExecultarTemplate(w, "perfilUsers", struct {
+		Usuario []models.Usuario
+	}{
+		Usuario: usuarios,
 	})
 }

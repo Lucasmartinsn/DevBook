@@ -17,6 +17,11 @@ import (
 
 // Essa funcao vai retorna a tela de login da aplicacao
 func CarregarTelaLogin(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := service.Ler(r)
+	if cookie["token"] != "" {
+		http.Redirect(w, r, "/home", http.StatusFound)
+		return
+	}
 	utils.ExecultarTemplate(w, "login", nil)
 }
 

@@ -12,10 +12,11 @@
                         {{ template "cardUser" .}}
                     {{ else }}
                         <div class="conteiner-fluid d-flex justify-content-center">
-                            <p class="fs-4">
-                                <strong>Nenhum resultado encontrado para a busca Passada</strong>
-                                <i class="bi bi-emoji-frown" style="font-size: 50px;"></i>
-                            </p>
+                            <div>
+                                <p class="fs-4 d-flex">
+                                    <strong>Nenhum resultado encontrado para a busca Passada</strong>
+                                </p>
+                            </div>
                         </div>
                     {{ end }}
                 </div>

@@ -1,41 +1,53 @@
 {{ template "header" .}}
 
 <main>
-    <div class="container-fluid">
-      <div class="row mt-4 col-12">
-        <div class=" col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-          <div class="shadow-sm p-3 mb-5 bg-body rounded">
-            <form action="" id="nova-publicacao">
-              <div class="mb-3">
-                <label for="titulo" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="titulo" placeholder="Titulo da sua publicação">
-              </div>
-              <div class="mb-3">
-                <label for="conteudo" class="form-label">Conteudo</label>
-                <textarea class="form-control" id="conteudo" rows="3"></textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button style="width: 160px;" type="submit" class="btn btn-primary">Publicar <i class="bi bi-send-plus"></i></button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 mt-4 container-fluid overflow-auto" style="height: 680px;">
-          <div class="shadow-sm p-3 mb-5 bg-body rounded w-100 d-flex justify-content-center">
-            <div class="col-12">
-              {{ range .Publicacao }}
-                  {{if (eq .AutorId $.Id)}}
-                    {{template "publicacao-com-permicao" .}}
-                  {{ else }}
-                    {{template "publicacao-sem-permicao" .}}
-                  {{ end }}
-              {{ end }}
+  <div class="container-fluid">
+    <div class="row mt-4 col-12">
+      <div class=" col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+        <div class="shadow-sm p-3 mb-5 bg-body rounded">
+          <form action="" id="nova-publicacao">
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Titulo</label>
+              <input type="text" class="form-control" id="titulo" placeholder="Titulo da sua publicação">
             </div>
+            <div class="mb-3">
+              <label for="conteudo" class="form-label">Conteudo</label>
+              <textarea class="form-control" id="conteudo" rows="3"></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button style="width: 160px;" type="submit" class="btn btn-primary">Publicar 
+                <i class="bi bi-send-plus"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 mt-4 container-fluid overflow-auto"
+        style="height: 680px;">
+        <div class="shadow-sm p-3 mb-5 bg-body rounded w-100 d-flex justify-content-center">
+          <div class="col-12">
+            {{ range .Publicacao }}
+              {{if (eq .AutorId $.Id)}}
+                {{template "publicacao-com-permicao" .}}
+              {{ else }}
+                {{template "publicacao-sem-permicao" .}}
+              {{ end }}
+            {{ else }}
+            <div class="conteiner-fluid d-flex justify-content-center">
+              <div>
+                <p class="fs-4 d-flex">
+                  <strong>Você ainda não fez nenhuma publicação</strong>
+                  <p>Crie uma Publicações para seus amigos verem : ) </p>
+                </p>
+              </div>
+            </div>
+            {{ end }}
           </div>
         </div>
       </div>
     </div>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="/assets/js/home.js"></script>
+  </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="/assets/js/home.js"></script>
 {{ template "footer"}}

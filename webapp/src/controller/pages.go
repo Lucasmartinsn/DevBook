@@ -203,38 +203,30 @@ func CarregarPageSeachUser(w http.ResponseWriter, r *http.Request) {
 
 // vai carregar todos os perfies de usarios que retornaram da API
 func CarregarPagePerfilUsuarios(w http.ResponseWriter, r *http.Request) {
-	// nomeOrNick := strings.ToLower(r.URL.Query().Get("usuario"))
-	// url := fmt.Sprintf("%s/usuario?usuario=%s", os.Getenv("BASE_URL"), nomeOrNick)
-	// response, err := requisicoes.FazerRequestWithAuth(r, http.MethodGet, url, nil)
-	// if err != nil {
-	// 	respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
-	// 	return
-	// }
-	// defer response.Body.Close()
-	// if response.StatusCode >= 400 {
-	// 	respostas.TratarRespostaErro(w, response)
-	// 	return
-	// }
-	// var usuarios []models.Usuario
-	// if err = json.NewDecoder(response.Body).Decode(&usuarios); err != nil {
-	// 	respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
-	// 	return
-	// }
+	parametro := mux.Vars(r)
+	UsuarioPerfilId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
 
-	// utils.ExecultarTemplate(w, "pageSeach", struct {
-	// 	Usuario []models.Usuario
-	// }{
-	// 	Usuario: usuarios,
-	// })
 	usuarioId, err := idUser(r)
 	if err != nil {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
 
+	response, err := requisicoes.BuscarUserFullWithAuth(UsuarioPerfilId, r)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+
 	utils.ExecultarTemplate(w, "perfilUsers", struct {
+		Usuario models.Usuario
 		Id uint64
 	}{
+		Usuario: response,
 		Id: usuarioId,
 	})
 }

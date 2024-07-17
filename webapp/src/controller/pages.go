@@ -216,17 +216,17 @@ func CarregarPagePerfilUsuarios(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := requisicoes.BuscarUserFullWithAuth(UsuarioPerfilId, r)
-	if err != nil {
-		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
-		return
-	}
-
+	usuario, _ := requisicoes.BuscarUserFullWithAuth(UsuarioPerfilId, r)
+	// if err != nil {
+	// 	respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+	// 	return
+	// }
+	fmt.Println(usuario)
 	utils.ExecultarTemplate(w, "perfilUsers", struct {
 		Usuario models.Usuario
-		Id uint64
+		Id      uint64
 	}{
-		Usuario: response,
-		Id: usuarioId,
+		Usuario: usuario,
+		Id:      usuarioId,
 	})
 }

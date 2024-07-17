@@ -3,7 +3,7 @@
     <div class="card-body">
         <h5 class="card-title fs-3">{{.Titulo}}</h5>
         <p class="card-text">{{.Conteudo}}</p>
-        <a href="#">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
+        <a href="/perfil/{{.AutorId}}">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
         <hr>
         <div class="d-flex justify-content-end">
             <div>
@@ -21,7 +21,7 @@
     <div class="card-body">
         <h5 class="card-title fs-3">{{.Titulo}}</h5>
         <p class="card-text">{{.Conteudo}}</p>
-        <a href="#">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
+        <a href="/usuarios/{{.AutorId}}/perfil-public">{{.AutorNick}} - {{.CriadaEm.Format "02/01/2006"}}</a>
         <hr>
         <div class="d-flex justify-content-end text-center"> 
             <div class="text-muted fs-6 d-flex">

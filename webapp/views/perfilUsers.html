@@ -34,9 +34,9 @@
                     <div class="col-12">
                         {{ range .Usuario.Publicacoes }}
                             {{if (eq .AutorId $.Id)}}
-                                {{template "publicacao-com-permicao" .}}
+                                {{template "publicacao-com-permicao" . }}
                             {{ else }}
-                                {{template "publicacao-sem-permicao" .Publicacao}}
+                                {{template "publicacao-sem-permicao" . }}
                             {{ end }}
                         {{ else }}
                         <div class="conteiner-fluid d-flex justify-content-center">

@@ -79,8 +79,8 @@ func buscarDadosOfUserSeguidor(canal chan<- []models.Usuario, usuarioId uint64, 
 	canal <- seguindo
 
 }
-func buscarDadosOfUserPublicacao(canal chan<- []models.Publicacao, r *http.Request) {
-	url := fmt.Sprintf("%s/publicacao/usuario", os.Getenv("BASE_URL"))
+func buscarDadosOfUserPublicacao(canal chan<- []models.Publicacao, usuarioId uint64, r *http.Request) {
+	url := fmt.Sprintf("%s/publicacao/%d/usuario", os.Getenv("BASE_URL"), usuarioId)
 	response, err := FazerRequestWithAuth(r, http.MethodGet, url, nil)
 	if err != nil {
 		canal <- []models.Publicacao{}
@@ -109,7 +109,7 @@ func BuscarUserFullWithAuth(id uint64, r *http.Request) (usuario models.Usuario,
 	go buscarDadosOfUser(canalUsuario, id, r)
 	go buscarDadosOfUserSeguidores(canalSeguidores, id, r)
 	go buscarDadosOfUserSeguidor(canalSeguidor, id, r)
-	go buscarDadosOfUserPublicacao(canalPublicacao, r)
+	go buscarDadosOfUserPublicacao(canalPublicacao, id, r)
 
 	// Variavei para serem usuadas No Select
 	var (
@@ -146,7 +146,7 @@ func BuscarUserFullWithAuth(id uint64, r *http.Request) (usuario models.Usuario,
 			publicacoes = publicacaoReload
 
 		}
-		
+
 	}
 	usuario.Seguindo = seguindo
 	usuario.Seguidores = seguidores

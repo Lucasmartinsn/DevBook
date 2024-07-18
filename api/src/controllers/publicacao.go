@@ -196,6 +196,28 @@ func BuscarPublicacaoUser(w http.ResponseWriter, r *http.Request) {
 	}
 	resposta.Json(w, 200, publicacoes)
 }
+func BuscarPublicacaoUserId(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+	userId, err := strconv.ParseUint(param["id"], 10, 64)
+	if err != nil {
+		resposta.Erro(w, 400, err)
+		return
+	}
+	conn, err := banco.Connction()
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	defer conn.Close()
+	repositorio := repositorios.NewReporOfPublicacao(conn)
+	publicacoes, err := repositorio.BuscarPublicacoesUser(userId)
+	if err != nil {
+		resposta.Erro(w, 500, err)
+		return
+	}
+	resposta.Json(w, 200, publicacoes)
+}
+
 func LikePublicacao(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	publicacaoId, err := strconv.ParseUint(param["id"], 10, 64)

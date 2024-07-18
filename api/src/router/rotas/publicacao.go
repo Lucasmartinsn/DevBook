@@ -44,6 +44,12 @@ var rotasPublicacao = []Rota{
 		ResquerAutntication: true,
 	},
 	{
+		Uri:                 "/publicacao/{id}/usuario",
+		Metodo:              http.MethodGet,
+		Funcao:              controllers.BuscarPublicacaoUserId,
+		ResquerAutntication: true,
+	},
+	{
 		Uri:                 "/publicacoes/{id}/like",
 		Metodo:              http.MethodPost,
 		Funcao:              controllers.LikePublicacao,

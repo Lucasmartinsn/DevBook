@@ -118,3 +118,45 @@ func DeletarCookie(w http.ResponseWriter, r *http.Request) {
 	service.Delete(w)
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+// Vai chamar a API para seguir um usuario
+func SeguirUsuario(w http.ResponseWriter, r *http.Request) {
+	parametro := mux.Vars(r)
+	userId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPost, fmt.Sprintf("%susuario/%d/seguir", os.Getenv("BASE_URL"), userId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+	respostas.Json(w, 200, "success")
+}
+// Vai chamar a API para deixar de seguir um usuario
+func DeixarSeguirUsuario(w http.ResponseWriter, r *http.Request) {
+	parametro := mux.Vars(r)
+	userId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodDelete, fmt.Sprintf("%susuario/%d/parar-de-seguir", os.Getenv("BASE_URL"), userId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+	respostas.Json(w, 200, "success")
+}

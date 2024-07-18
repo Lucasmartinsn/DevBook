@@ -65,4 +65,15 @@ var RotasUsuarioCrud = []Rota{
 		Funcao: controller.DeletarCookie,
 		Auth:   true,
 	},
+	{
+		URI:    "/usuario/{id}/seguir",
+		Method: http.MethodGet,
+		Funcao: controller.SeguirUsuario,
+		Auth:   true,
+	},{
+		URI:    "/usuario/{id}/deixar-de-seguir",
+		Method: http.MethodDelete,
+		Funcao: controller.DeixarSeguirUsuario,
+		Auth:   true,
+	},
 }

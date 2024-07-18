@@ -202,7 +202,7 @@ func CarregarPageSeachUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // vai carregar todos os perfies de usarios que retornaram da API
-func CarregarPagePerfilUsuarios(w http.ResponseWriter, r *http.Request) {
+func CarregarPagePerfilPublicUsuarios(w http.ResponseWriter, r *http.Request) {
 	parametro := mux.Vars(r)
 	UsuarioPerfilId, err := strconv.ParseUint(parametro["id"], 10, 64)
 	if err != nil {

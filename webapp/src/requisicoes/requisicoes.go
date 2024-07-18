@@ -2,7 +2,6 @@ package requisicoes
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -98,7 +97,7 @@ func buscarDadosOfUserPublicacao(canal chan<- []models.Publicacao, usuarioId uin
 }
 
 // Vai fazer 4 request na API para montar uma Struc de usuario completo
-func BuscarUserFullWithAuth(id uint64, r *http.Request) (usuario models.Usuario, err error) {
+func BuscarUserFullWithAuth(id uint64, r *http.Request) (models.Usuario, error) {
 	// Criando os canais para manipular as Go routines
 	canalUsuario := make(chan models.Usuario)
 	canalSeguidores := make(chan []models.Usuario)
@@ -113,6 +112,7 @@ func BuscarUserFullWithAuth(id uint64, r *http.Request) (usuario models.Usuario,
 
 	// Variavei para serem usuadas No Select
 	var (
+		usuario     models.Usuario
 		seguidores  []models.Usuario
 		seguindo    []models.Usuario
 		publicacoes []models.Publicacao
@@ -123,25 +123,29 @@ func BuscarUserFullWithAuth(id uint64, r *http.Request) (usuario models.Usuario,
 		select {
 		case usuarioReload := <-canalUsuario:
 			if usuarioReload.Id == 0 {
-				return models.Usuario{}, errors.New("erro ao buscar o Usuario")
+				// return models.Usuario{}, errors.New("erro ao buscar o Usuario")
+				usuario = models.Usuario{}
 			}
 			usuario = usuarioReload
 
 		case seguidoresReload := <-canalSeguidores:
 			if seguidoresReload == nil {
-				return models.Usuario{}, errors.New("erro ao buscar os Seguidores")
+				// return models.Usuario{}, errors.New("erro ao buscar os Seguidores")
+				seguidores = []models.Usuario{}
 			}
 			seguidores = seguidoresReload
 
 		case seguindoReload := <-canalSeguidor:
 			if seguindoReload == nil {
-				return models.Usuario{}, errors.New("erro ao buscar os usuarios Seguindo")
+				// return models.Usuario{}, errors.New("erro ao buscar os usuarios Seguindo")
+				seguindo = []models.Usuario{}
 			}
 			seguindo = seguindoReload
 
 		case publicacaoReload := <-canalPublicacao:
 			if publicacaoReload == nil {
-				return models.Usuario{}, errors.New("erro ao buscar as publicações")
+				// return models.Usuario{}, errors.New("erro ao buscar as publicações")
+				publicacoes = []models.Publicacao{}
 			}
 			publicacoes = publicacaoReload
 

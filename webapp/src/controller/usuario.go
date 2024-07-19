@@ -147,7 +147,7 @@ func DeixarSeguirUsuario(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodDelete, fmt.Sprintf("%susuario/%d/parar-de-seguir", os.Getenv("BASE_URL"), userId), nil)
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodPost, fmt.Sprintf("%susuario/%d/parar-de-seguir", os.Getenv("BASE_URL"), userId), nil)
 	if err != nil {
 		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
 		return

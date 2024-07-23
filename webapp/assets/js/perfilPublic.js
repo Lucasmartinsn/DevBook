@@ -1,5 +1,7 @@
 $('#seguir-usuario').on('click', seguirUser);
 $('#deixar-seguir-usuario').on('click', deixarSeguirUser);
+$('.curtir-post').on('click', curtirPost)
+$('.descurtir-post').on('click', descurtirPost)
 
 function seguirUser(evento) {
     evento.preventDefault();
@@ -58,5 +60,40 @@ function deixarSeguirUser(evento) {
             });
         });
 
+    });
+}
+function curtirPost(evento) {
+    evento.preventDefault();
+    // Aqui vai recuperar o id da publicação
+    const idPost = $(this).closest('.card').data('publicacao-id');
+    $.ajax({
+        url: `/publicacoes/${idPost}/curtir`,
+        type: 'POST',
+        dataType: 'json',
+    }).done(function(data) {
+        window.location.reload();
+    }).fail(function(data) {
+        console.log(data);
+        Swal.fire({
+            title: "Falha ao curtir publicação!",
+            icon: "error"
+        });
+    });
+}
+function descurtirPost(evento) {
+    evento.preventDefault();
+    const idPost = $(this).closest('.card').data('publicacao-id');
+    $.ajax({
+        url: `/publicacoes/${idPost}/descurtir`,
+        type: 'POST',
+        dataType: 'json',
+    }).done(function(data) {
+        window.location.reload();
+    }).fail(function(data) {
+        console.log(data);
+        Swal.fire({
+            title: "Falha ao curtir publicação!",
+            icon: "error"
+        });
     });
 }

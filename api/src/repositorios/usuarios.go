@@ -2,6 +2,7 @@ package repositorios
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 
 	"github.com/Lucasmartinsn/DevBook/api/src/modelos"
@@ -35,7 +36,18 @@ func (repositorio usuario) Criar(usuario modelos.Usuario) (uint64, error) {
 func (repositorio usuario) Buscar(nomeOUnick string) ([]modelos.Usuario, error) {
 	nomeOUnicks := fmt.Sprintf("%%%s%%", nomeOUnick)
 	linha, err := repositorio.db.Query(
-		"select id, nome,nick, email, criacaoEm from usuario where nome LIKE ? or nick LIKE ?", nomeOUnicks, nomeOUnicks,
+		`select u.id, u.nome, u.nick, u.email, u.criacaoEm,
+			COALESCE(
+				(
+					SELECT JSON_ARRAYAGG(JSON_OBJECT('id', u2.id, 'nome', u2.nome, 'nick', u2.nick))
+					FROM usuario u2
+					INNER JOIN seguidores s ON u2.id = s.usuarioId
+					WHERE s.seguidoresId = u.id
+				),
+				JSON_ARRAY()
+			) AS seguidores
+		from usuario u
+		where u.nome LIKE ? or nick LIKE ?;`, nomeOUnicks, nomeOUnicks,
 	)
 	if err != nil {
 		return nil, err
@@ -45,9 +57,15 @@ func (repositorio usuario) Buscar(nomeOUnick string) ([]modelos.Usuario, error) 
 	var usuarios []modelos.Usuario
 	for linha.Next() {
 		var usuario modelos.Usuario
-		if err = linha.Scan(&usuario.Id, &usuario.Nome, &usuario.Nick, &usuario.Email, &usuario.CriacaoEM); err != nil {
+		var seguidoresJson string
+
+		if err = linha.Scan(&usuario.Id, &usuario.Nome, &usuario.Nick, &usuario.Email, &usuario.CriacaoEM , &seguidoresJson); err != nil {
 			return nil, err
 		}
+		if err := json.Unmarshal([]byte(seguidoresJson), &usuario.Seguidores); err != nil {
+			return nil, err
+		}
+
 		usuarios = append(usuarios, usuario)
 	}
 	return usuarios, nil

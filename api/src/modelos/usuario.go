@@ -10,12 +10,13 @@ import (
 )
 
 type Usuario struct {
-	Id        uint64    `json:"id,omitempty"`
-	Nome      string    `json:"nome,omitempty"`
-	Nick      string    `json:"nick,omitempty"`
-	Email     string    `json:"email,omitempty"`
-	Senha     string    `json:"senha,omitempty"`
-	CriacaoEM time.Time `json:"criacaoEm,omitempty"`
+	Id         uint64    `json:"id,omitempty"`
+	Nome       string    `json:"nome,omitempty"`
+	Nick       string    `json:"nick,omitempty"`
+	Email      string    `json:"email,omitempty"`
+	Senha      string    `json:"senha,omitempty"`
+	Seguidores []Usuario `json:"seguidores,omitempty"`
+	CriacaoEM  time.Time `json:"criacaoEm,omitempty"`
 }
 
 type Senha struct {

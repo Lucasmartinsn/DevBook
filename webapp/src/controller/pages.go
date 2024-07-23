@@ -191,7 +191,7 @@ func CarregarPageSeachUser(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-
+	fmt.Println(usuarios)
 	utils.ExecultarTemplate(w, "pageSeach", struct {
 		Usuario []models.Usuario
 		Id      uint64
@@ -215,7 +215,9 @@ func CarregarPagePerfilPublicUsuarios(w http.ResponseWriter, r *http.Request) {
 		respostas.Json(w, 422, respostas.ErrorApi{Error: err.Error()})
 		return
 	}
-
+	if usuarioId == UsuarioPerfilId {
+		http.Redirect(w, r, fmt.Sprintf("/perfil/%d", usuarioId), http.StatusFound)
+	}
 	usuario, _ := requisicoes.BuscarUserFullWithAuth(UsuarioPerfilId, r)
 	utils.ExecultarTemplate(w, "perfilUsers", struct {
 		Usuario models.Usuario

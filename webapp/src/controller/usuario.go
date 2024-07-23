@@ -160,3 +160,27 @@ func DeixarSeguirUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 	respostas.Json(w, 200, "success")
 }
+
+// Essa função vai apagar a conta do usuario
+func DeletarContaDeUsuario(w http.ResponseWriter, r *http.Request) {
+	parametro := mux.Vars(r)
+	userId, err := strconv.ParseUint(parametro["id"], 10, 64)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	response, err := requisicoes.FazerRequestWithAuth(r, http.MethodDelete, fmt.Sprintf("%susuario/%d", os.Getenv("BASE_URL"), userId), nil)
+	if err != nil {
+		respostas.Json(w, 500, respostas.ErrorApi{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarRespostaErro(w, response)
+		return
+	}
+
+	service.Delete(w)
+	http.Redirect(w, r, "/", http.StatusFound)
+}

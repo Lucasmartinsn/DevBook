@@ -7,7 +7,19 @@
                     <input type="hidden" id="userID" value="{{ .Usuario.Id }}">
                     <form id="formulario-atualiza-cadastro">
                         <div class="col-10 position-relative" style="left: 50px;">
-                            <span class="fs-5">Atualizar seus dados:</span>
+                            <div class="d-flex">
+                                <div class="p-2 w-100">
+                                    <span class="fs-5">Atualizar seus dados:</span>
+                                </div>
+                                <div class="p-2 flex-shrink-1">
+                                    <div class="dropdown">
+                                        <i class="bi bi-grip-vertical dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" id="deletar-perfil" href="">Deletar perfil.</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-2">
                                 <label for="nome" class="form-label">Nome:</label>
                                 <input type="text" class="form-control" name="nome" id="nome"
@@ -70,14 +82,14 @@
                             {{ range .Publicacoes }}
                                 {{template "publicacao-com-permicao" .}}
                             {{ else }}
-                                <div class="conteiner-fluid d-flex justify-content-center">
-                                    <div>
-                                        <p class="fs-4 d-flex">
-                                            <strong>Você ainda não fez nenhuma publicação</strong>
-                                            <p>Crie uma Publicações para seus amigos verem : ) </p>
-                                        </p>
-                                    </div>
+                            <div class="conteiner-fluid d-flex justify-content-center">
+                                <div>
+                                    <p class="fs-4 d-flex">
+                                        <strong>Você ainda não fez nenhuma publicação</strong>
+                                    <p>Crie uma Publicações para seus amigos verem : ) </p>
+                                    </p>
                                 </div>
+                            </div>
                             {{ end }}
                         </div>
                     </div>
